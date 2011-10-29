@@ -36,7 +36,8 @@ class WeiboLoginHandler(BaseHandler):
 class BattleViewHandler(BaseHandler):
     @login_required
     def get(self, id):
-        self.render('battle.html', host=options.host, port=options.port, bf_id=id)
+        self.render('battle.html', host=options.host, port=options.port, bf_id=id,
+                    battle=Battle.objects.get(id=id).to_dict(detail=True))
 
     def post(self, *args, **kwargs):
         print('get message')

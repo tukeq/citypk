@@ -50,7 +50,7 @@ class Application(tornado.web.Application):
             (r'/battles2/%s' % const.MATCH_NAME, BattleViewHandler2),
 
             (r'/api/battles', BattleListHandler),
-            (r'/api/battles/%s' % const.MATCH_NAME, BattleHandler),
+            (r'/api/battle/%s' % const.MATCH_NAME, BattleHandler),
             (r'/api/posts/%s/([0|1])' % const.MATCH_NAME, PostListHandler),
             (r'/api/post', PostMessageHandler),
             (r'/api/vote', PostVoteHandler),
