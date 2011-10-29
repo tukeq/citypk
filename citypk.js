@@ -82,7 +82,6 @@ window.POSTS = Backbone.View.extend({
 		this.render();
 	},
 	refresh: function(){
-	
 	}
 });
 
