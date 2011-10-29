@@ -3,7 +3,7 @@ from __future__ import unicode_literals, print_function, division
 import asyncore
 import json
 import logging
-from wsgiref.handlers import BaseHandler
+from vendors.base_handler import BaseHandler
 import os
 
 import tornado.httpserver
