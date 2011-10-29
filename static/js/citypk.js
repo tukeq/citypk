@@ -291,8 +291,9 @@ $('.log-tabs').click(function(){
 	$('#fighter'+$(this).attr('fighter')+'posts ul').hide();
 	$('#fighter'+$(this).attr('fighter')+$(this).attr('rel')).show();
 	return false;
-});
+})
 
+/*
 var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
 ws.onopen = function() {};
 ws.onmessage = function (evt) {
@@ -302,7 +303,6 @@ ws.onmessage = function (evt) {
 	}
 };
 ws.onclose = function() {};
-
-
+*/
 
 })(jQuery);
