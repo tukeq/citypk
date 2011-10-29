@@ -9,27 +9,35 @@ $.fn.spin = function(opts) {this.each(function() {var $this = $(this),spinner = 
 // MODEL : BATTLE
 window.BATTLE = Backbone.Model.extend({
 	initialize: function() {
-		this.url = 'api/battle/'+bf_id;
-		this.fetch();
-
-		// LOAD BATTLE PLAYERS
-		_.each(this.get('fighters'),function(f){
-		
-			// SET FIGHTER ID
-			var fid = (typeof window.fighter == 'undefined') ? 0 : 1 ;
-			
-			// UPDATE UI WITH FIGHTER INFO
-			$('#fighter'+fid+'name').html(f.name); // NAME
-			$('#fighter'+fid+'desc').html(f.description); // DESCRIPTION
-			
-			// CREATE FIGHTER POSTS MODEL
-			window.fighter[fid] = new FIGHTER({
-					posts: f.posts,
-					url: '/api/posts/'+window.bf_id+'/'+fid+'/'
-			});
-		
-		});
-		
+		this.url = 'api/battle/'+this.id;
+		this.fetch({
+			success: function(r){
+				//console.log(this.get('fighters'));
+				
+				// LOAD BATTLE PLAYERS
+				_.each(this.get('fighters'),function(f){
+				
+					// SET FIGHTER ID
+					var fid = (typeof window.fighter == 'undefined') ? 0 : 1 ;
+					
+					// UPDATE UI WITH FIGHTER INFO
+					$('#fighter'+fid+'name').html(f.name); // NAME
+					$('#fighter'+fid+'desc').html(f.description); // DESCRIPTION
+					
+					// CREATE FIGHTER POSTS MODEL
+					window.fighter[fid] = new FIGHTER({
+							posts: f.posts,
+							url: '/api/posts/'+window.bf_id+'/'+fid+'/'
+					});
+				
+				});			
+			},
+			error: function(r){
+				console.log('error');
+				console.log(r);
+				//alert('oh shit!');
+			}
+		});		
 	}
 });
 
@@ -75,7 +83,7 @@ window.CITYPK = Backbone.Router.extend({
 		});
 		
 	},
-	battle: function(id){
+	battle: function(id) {
 		
 		// SET BATTLEFIELD ID
 		window.bf_id = id;
