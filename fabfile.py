@@ -10,15 +10,14 @@ import os
 
 from fabric.api import *
 
-DEPLOY_DIR = '~/citypk'
+DEPLOY_DIR = '/home/ubuntu/citypk'
 
 env.hosts = ['50.18.172.94']
 env.user = 'ubuntu'
 
 def deploy():
-  with cd(DEPLOY_DIR):
-    with prefix('sudo -i su'):
-
+#  with prefix('sudo su'):
+    with cd(DEPLOY_DIR):
       with prefix('source ~/envs/citypk/bin/activate'):
         run('supervisorctl stop all')
         run('git pull --rebase')
