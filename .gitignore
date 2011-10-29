@@ -1,9 +1,7 @@
 *~
 .DS_Store
 thumbs.db
-<<<<<<< HEAD
 .idea
-=======
-
 alex.html
->>>>>>> added Backbone JS lib and dependencies
+*.pyc
+sessions/*

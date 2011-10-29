@@ -10,6 +10,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
+from models import *
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -32,4 +33,7 @@ class PostMessageHandler(tornado.websocket.WebSocketHandler):
 
 class PostVoteHandler(tornado.websocket.WebSocketHandler):
   def post(self):
-    pass
+    data = json.loads(self.request.body)
+    post_id = data.get('post_id')
+    post = Post.objects.get(id=post_id)
+    

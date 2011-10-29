@@ -13,6 +13,11 @@ from tornado.options import define, options
 from mongoengine import connect
 import const
 from api import *
+from util import get_abs_url
+from vendors.base_handler import BaseHandler
+from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler
+from vendors.weibo_auth import _oauth
+import vendors.tornado_session as session
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -33,38 +38,55 @@ class RealtimeHandler(tornado.websocket.WebSocketHandler):
         LISTENERS.remove(self)
 
 class IndexHandler(tornado.web.RequestHandler):
+
     def get(self, *args, **kargs):
         self.render('index.html', host=options.host, port=options.port)
 
     def post(self, *args, **kwargs):
-
         print('get message')
 #        print(self.request.)
         for listener in LISTENERS:
           listener.write_message('this is from server, websocket is okay')
 
-def start_web():
-    settings = dict(
-            debug=True,
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            )
+class WeiboLoginHandler(BaseHandler):
+  @login_required
+  def get(self):
+    self.render("login.html")
 
-    application = tornado.web.Application([
+class Application(tornado.web.Application):
+    def __init__(self):
+
+        handlers = [
             (r'/', IndexHandler),
+            (r'/login', AuthLoginHandler),
+            (r'/login_check', AuthLoginCheckHandler),
             (r'/messages', RealtimeHandler),
             (r'/api/battles', BattleListHandler),
             (r'/api/battle/%s' % const.MATCH_NAME, BattleHandler),
             (r'/api/posts/%s/([0|1])/%s' % (const.MATCH_NAME, const.MATCH_NAME), PostListHandler),
             (r'/api/post', PostMessageHandler),
             (r'/api/vote', PostVoteHandler),
+        ]
+        settings = dict(
+            cookie_secret="43oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=",
+            #login_url="/auth/login",
+            session_secret='some secret password!!',
+            session_dir='sessions',
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            xsrf_cookies=False,
+        )
+        tornado.web.Application.__init__(self, handlers, **settings)
+        self.session_manager = session.TornadoSessionManager(settings["session_secret"], settings["session_dir"])
 
-            ], **settings)
+def main():
     tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(options.port)
-    print('start server at %s:%s' % (options.host, options.port))
+    app = Application()
+    app.listen(options.port)
+    connect('citypk')
+    print("start on port %s..."%options.port)
     tornado.ioloop.IOLoop.instance().start()
 
+
 if __name__ == "__main__":
-    connect(db='citypk')
-    start_web()
+    main()
