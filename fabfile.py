@@ -17,7 +17,9 @@ env.user = 'ubuntu'
 
 def deploy():
   with cd(DEPLOY_DIR):
-    with prefix('source ~/envs/citypk/bin/activate'):
+    with prefix('sudo -i su'):
+
+      with prefix('source ~/envs/citypk/bin/activate'):
         run('supervisorctl stop all')
         run('git pull --rebase')
         run('supervisorctl reload')
