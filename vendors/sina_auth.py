@@ -61,7 +61,7 @@ class AuthLoginCheckHandler(BaseHandler):
 
         # save the user info to database
         info = api.me()
-        user, created = User.objects.get_or_create(weibo_id=info.id)
+        user, created = User.objects.get_or_create(weibo_id=str(info.id))
         if created:
           user.avatar = info.profile_image_url
           user.name = info.screen_name
