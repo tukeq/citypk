@@ -242,7 +242,7 @@ window.SUBMIT = Backbone.View.extend({
 
 window.CITYPK = Backbone.Router.extend({
 	routes: {
-		'battle/:id':		'battle'
+		'':		'battle'
 	},
 	initialize: function(){
 		
@@ -258,10 +258,10 @@ window.CITYPK = Backbone.Router.extend({
 		});
 		
 	},
-	battle: function(id) {
+	battle: function() {
 		
 		// SET BATTLEFIELD ID
-		window.bf_id = id;
+		window.bf_id = $('#battle_field_id').val();
 		window.posts = new Object,
 		window.fighter = new Object;
 		

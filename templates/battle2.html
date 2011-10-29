@@ -15,7 +15,7 @@
     <link rel="stylesheet/less" href="../static/lib/bootstrap.less">
 	  <script src="../static/js/less-1.1.3.min.js"></script>
     <script src="/static/js/jquery-1.6.4.min.js"></script>
-    <script src="/static/jquery.plugin.js"></script>
+    <!--<script src="/static/jquery.plugin.js"></script>-->
     <style type="text/css">
       /* Override some defaults */
       html, body {
@@ -70,26 +70,9 @@
         text-align:center;
       }
     </style>
+	<!-- JAVASCRIPT -->
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/apple-touch-icon-114x114.png">
-    
-    <!-- JAVASCRIPT -->
-	<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="static/js/jquery.js"><\/script>')</script>
-	
-	<script defer src="../static/js/libs/underscore.js"></script>
-	<script defer src="../static/js/libs/backbone.js"></script>
-	<script defer src="../static/js/libs/json2.js"></script>
-	
-	<script defer src="../static/js/citypk.js"></script>
-	<!-- JAVASCRIPT -->    
-    
-    
+
 </head>
 <body style="background: url(/static/img/background.png)">
 
@@ -106,9 +89,9 @@
 		</div>
 		<div class='clear'></div>
     </div>
-    
+
 <div class="row">
-	
+
 	<div class="span4">
 		<ul class="log-tabs">
 		  <li class="active"><a href="#" fighter="0" rel="hot">热门</a></li>
@@ -141,25 +124,25 @@
 
 		</div>
 	</div>
-	
-	
+
+
 	<div style="width: 480px; float: left;">
-	
+
 		<div class='span4 city-icon'>
 			<h4 id="fighter0name"></h4>
 			<p id="fighter0desc"></p>
 			<img src="{{battle['fighter0']['photo']}}" id="fighter0pic" width="200" />
 		</div>
-		
+
 		<div class='span4 city-icon'>
 			<h4 id="fighter1name"></h4>
 			<p id="fighter1desc"></p>
 			<img src="{{battle['fighter1']['photo']}}" id="fighter1pic" width="200" />
 		</div>
-	
+
 		<div class='clear'></div>
-		
-		
+
+
 		<!-- NEW POST FORM -->
 		<div class='post-new' id="submitPost" style="clear: both;">
 			<form class="inactive">
@@ -173,9 +156,9 @@
 				</fieldset>
 			</form>
 		</div><!--  END = NEW POST FORM -->
-		
+
 	</div>
-	
+
 
 	<div class="span4">
 		<ul class="log-tabs">
@@ -215,23 +198,30 @@
 
 
 </div> <!-- /container -->
-    
+
 <div class="successMsg" style="position:fixed;left:0;bottom:0;width:100%;height:60px;background:green;color:#fff;display:none;font-size:36px;text-align:center;"></div>
 
 
-    
+
 <script language="javascript">
 $(function() {
-//	$('#fighter0support').click(function() {
-//    var data = {
-//      bf_id: '4eac2311421aa91bc8000000',
-//      fighter: 0,
-//      comment: $('#punch').val()
-//    };
-//    $.postJSON('/api/post', data, function(data) {
-//
-//    });
-//	});
+
+
+  $.extend({
+    postJSON: function (url, json, success, options) {
+      var config = {
+        url: url,
+        type: "POST",
+        data: json ? JSON.stringify(json) : null,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: success
+      };
+      $.ajax($.extend(options, config));
+    }
+  });
+
+
   var javascript_countdown = function () {
       var time_left = 10; //number of seconds for countdown
       var output_element_id = 'javascript_countdown_time';
@@ -308,12 +298,12 @@ $(function() {
 
     function add_post(comment, fighter){
       var data = {
-        bf_id: $('#bf_id'),
+        bf_id: $('#bf_id').val(),
         fighter: fighter,
         comment: comment
       };
-
-      $.postJSON('/api/post', data, function(data) {
+//      alert(data);
+      $.postJSON('/api/post', data, function(res) {
         alert('done');
       });
     }
