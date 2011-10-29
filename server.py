@@ -16,8 +16,8 @@ from api import *
 from util import get_abs_url
 from vendors.base_handler import BaseHandler
 from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
-from vendors.weibo_auth import _oauth
 import vendors.tornado_session as session
+from views import IndexHandler
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -36,22 +36,6 @@ class RealtimeHandler(BaseHandler):
     def on_close(self):
 #      pass
         LISTENERS.remove(self)
-
-class IndexHandler(BaseHandler):
-    @login_required
-    def get(self, *args, **kargs):
-        self.render('index.html', host=options.host, port=options.port)
-
-    def post(self, *args, **kwargs):
-        print('get message')
-#        print(self.request.)
-        for listener in LISTENERS:
-          listener.write_message('this is from server, websocket is okay')
-
-class WeiboLoginHandler(BaseHandler):
-  @login_required
-  def get(self):
-    self.render("login.html")
 
 class Application(tornado.web.Application):
     def __init__(self):

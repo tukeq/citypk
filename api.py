@@ -14,7 +14,7 @@ import tornado.web
 import tornado.options
 from tornado.options import define, options
 
-from models import *
+from vendors.models import *
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
