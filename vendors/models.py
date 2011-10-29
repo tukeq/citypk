@@ -53,10 +53,18 @@ class Battle(Document):
   participants = IntField(default = lambda:0)
   created_at = DateTimeField(default=lambda:datetime.now())
 
+
+  def update_one(self, *args, **kwargs):
+    self.__class__.objects(id=self.id).update_one(*args, **kwargs)
+
+
   def blood(self, fighter, amount):
     f = self.fighter1 if fighter == 1 else self.fighter2
     f.blood -= amount
-    self.save()
+    if fighter == 1:
+      self.update_one(set__fighter1=f)
+    else:
+      self.update_one(set__fighter2=f)
 
   @property
   def status(self):
