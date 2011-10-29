@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>City PK</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            var ws = new WebSocket("ws://localhost:8000/messages");
+            ws.onopen = function() {};
+            ws.onmessage = function (evt) {
+//                  var received_msg = $.parseJSON(evt.data);
+                alert(evt.data);
+            };
+            ws.onclose = function() { };
+            $('#send').click(function(){
+              $.post('http://localhost:8000/', {
+                sss:"test"
+              });
+              return false;
+            });
+        });
+    </script>
+
+</head>
+<body>
+<span id="message"></span>
+<!--<form method="post" action="/" id="form1">-->
+  <textarea name="message"></textarea>
+  <button id="send">Send</button>
+<!--</form>-->
+</body>
+</html>
