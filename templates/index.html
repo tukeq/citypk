@@ -6,7 +6,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            var ws = new WebSocket("ws://localhost:8000/messages");
+            var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
             ws.onopen = function() {};
             ws.onmessage = function (evt) {
 //                  var received_msg = $.parseJSON(evt.data);
@@ -14,7 +14,7 @@
             };
             ws.onclose = function() {};
             $('#send').click(function(){
-              $.post('http://localhost:8000/', {
+              $.post('http://{{host}}:{{port}}/', {
                 sss:"test"
               });
               return false;
