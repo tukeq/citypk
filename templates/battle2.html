@@ -14,6 +14,8 @@
     <!-- Le styles -->
     <link rel="stylesheet/less" href="../static/lib/bootstrap.less">
 	  <script src="../static/js/less-1.1.3.min.js"></script>
+    <script src="/static/js/jquery-1.6.4.min.js"></script>
+    <script src="/static/jquery.plugin.js"></script>
     <style type="text/css">
       /* Override some defaults */
       html, body {
@@ -100,7 +102,7 @@
 		</div>
 		<div class='span2 countdown-timer'><div id="javascript_countdown_time"></div></div>
 		<div class='span7 hp-right'>
-			<div class='hp-slider' id="fighter1blood"><div id='fighter0hp' class="blood"></div></div>
+			<div class='hp-slider' id="fighter1blood"><div id='fighter1hp' class="blood"></div></div>
 		</div>
 		<div class='clear'></div>
     </div>
@@ -122,13 +124,13 @@
 		<div class='span4 city-icon'>
 			<h4 id="fighter0name"></h4>
 			<p id="fighter0desc"></p>
-			<img src="" id="fighter0pic" width="200" />
+			<img src="{{battle['fighter0']['photo']}}" id="fighter0pic" width="200" />
 		</div>
 		
 		<div class='span4 city-icon'>
 			<h4 id="fighter1name"></h4>
 			<p id="fighter1desc"></p>
-			<img src="" id="fighter1pic" width="200" />
+			<img src="{{battle['fighter1']['photo']}}" id="fighter1pic" width="200" />
 		</div>
 	
 		<div class='clear'></div>
@@ -137,10 +139,11 @@
 		<!-- NEW POST FORM -->
 		<div class='post-new' id="submitPost" style="clear: both;">
 			<form class="inactive">
+
 				<fieldset>
-					<div class='posting-area'><textarea id="comment" disabled></textarea></div>
-					<input id="fighter0submit" type="submit" class="submit" value="" rel="" disabled />
-					<input id="fighter1submit" type="submit" class="submit" value="" rel="" disabled />
+					<textarea id="comment" ></textarea>
+					<input id="fighter0submit" type="submit" class="submit" value="支持{{ battle['fighter0']['name'] }}" rel="" />
+					<input id="fighter1submit" type="submit" class="submit" value="支持{{ battle['fighter1']['name'] }}" rel="" />
 					<div id="energyBar" style="width: 200px;border: 1px solid #ccc;"><div class="energy" style="width:0;min-height:25px;background:red;"></div></div>
 				</fieldset>
 			</form>
@@ -151,8 +154,8 @@
 
 	<div class="span4">
 		<ul class="log-tabs">
-		  <li class="active"><a href="#" fighter="1" rel="hot">Hot</a></li>
-		  <li><a href="#" fighter="1" rel="recent">New</a></li>
+		  <li class="active"><a href="#" fighter="1" rel="hot">热门</a></li>
+		  <li><a href="#" fighter="1" rel="recent">最新</a></li>
 		</ul>
         <div class='clear'></div>
 		<div id='fighter1posts'></div>
@@ -168,26 +171,24 @@
 
 <script type="text/template" id="posts-template">
 
-<ul class="unstyled combat-log hidden" id="fighter<%= fighter %>recent">
+<ul class="unstyled" id="fighter<%= fighter %>recent">
 	<% _.each(recent,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a>(125)
+			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
 		</div>
 		<%= p.comment %></div>
-        <div class='clear'></div>
 		<img class='combat-img' src="<%= p.photo_url %>" /></li>
 	<% }); %>
 </ul>
 
-<ul class="unstyled combat-log" id="fighter<%= fighter %>hot">
+<ul class="unstyled" id="fighter<%= fighter %>hot">
 	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a> (125)
+			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
 		</div>
 		<%= p.comment %></div>
-        <div class='clear'></div>
 		<img class='combat-img' src="<%= p.photo_url %>" /></li>
 	<% }); %>
 </ul>
@@ -203,9 +204,9 @@ $(function() {
 		fighter: 0,
 		comment: $('#punch').val()
 	};
-	$.post('/api/post', data, function(data) {
-		alert(data);
-	}, 'json');
+	$.postJSON('/api/post', data, function(data) {
+
+	});
 	})
   var javascript_countdown = function () {
       var time_left = 10; //number of seconds for countdown

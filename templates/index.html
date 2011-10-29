@@ -83,10 +83,10 @@
       <ul>
       {% for battle in battles%}
 
-          <li><a href="/battles/{{battle.id}}">
-            <img src="{{battle.fighter1.photo}}" width="200" height="200">
+          <li><a href="/battles2/{{battle.id}}">
+            <img src="{{battle.fighter0.photo}}" width="200" height="200">
             <span class="vs">VS</span>
-            <img src="{{battle.fighter2.photo}}" width="200" height="200"></a>
+            <img src="{{battle.fighter1.photo}}" width="200" height="200"></a>
           </li>
         
       {% end %}

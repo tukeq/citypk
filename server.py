@@ -11,14 +11,12 @@ import tornado.web
 import tornado.options
 from tornado.options import define, options
 from mongoengine import connect
-import const
-from api import *
-from util import get_abs_url
+from vendors import const
 from vendors.api import BattleHandler, BattleListHandler, PostListHandler, PostMessageHandler, PostVoteHandler
 from vendors.base_handler import BaseHandler
 from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
 import vendors.tornado_session as session
-from vendors.views import IndexHandler, BattleViewHandler
+from vendors.views import IndexHandler, BattleViewHandler, BattleViewHandler2
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -48,6 +46,7 @@ class Application(tornado.web.Application):
             (r'/logout', AuthLogoutHandler),
             (r'/messages', RealtimeHandler),
             (r'/battles/%s' % const.MATCH_NAME, BattleViewHandler),
+            (r'/battles2/%s' % const.MATCH_NAME, BattleViewHandler2),
 
             (r'/api/battles', BattleListHandler),
             (r'/api/battles/%s' % const.MATCH_NAME, BattleHandler),

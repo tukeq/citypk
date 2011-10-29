@@ -47,8 +47,8 @@ class Battle(Document):
   end = DateTimeField()
   desc = StringField()
 
+  fighter0 = EmbeddedDocumentField(Fighter)
   fighter1 = EmbeddedDocumentField(Fighter)
-  fighter2 = EmbeddedDocumentField(Fighter)
 
   participants = IntField(default = lambda:0)
   created_at = DateTimeField(default=lambda:datetime.now())
@@ -59,12 +59,12 @@ class Battle(Document):
 
 
   def blood(self, fighter, amount):
-    f = self.fighter1 if fighter == 1 else self.fighter2
+    f = self.fighter0 if fighter == 0 else self.fighter1
     f.blood -= amount
-    if fighter == 1:
-      self.update_one(set__fighter1=f)
+    if fighter == 0:
+      self.update_one(set__fighter0=f)
     else:
-      self.update_one(set__fighter2=f)
+      self.update_one(set__fighter1=f)
 
   @property
   def status(self):
@@ -77,8 +77,8 @@ class Battle(Document):
   @property
   def winner(self):
     if self.status == BATTLE_FINISHED:
-      return 1 if self.fighter1.blood > self.fighter2.blood else 2
-    return 0
+      return 0 if self.fighter0.blood > self.fighter1.blood else 1
+    return -1
 
   @property
   def time_left(self):
@@ -114,17 +114,17 @@ class Battle(Document):
       'status': self.status,
       'winner': self.winner,
       'time_left': self.time_left,
+      'fighter0': self.fighter0.to_dict(),
       'fighter1': self.fighter1.to_dict(),
-      'fighter2': self.fighter2.to_dict(),
       }
     if detail:
+      info['fighter0'].update({
+        'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 0, 'recent')],
+        'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 0, 'hottest')]
+      })
       info['fighter1'].update({
         'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'recent')],
         'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'hottest')]
-      })
-      info['fighter2'].update({
-        'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 2, 'recent')],
-        'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 2, 'hottest')]
       })
 
     return info
@@ -190,13 +190,13 @@ def _init_data():
     start=datetime.now(),
     end=datetime.now() + timedelta(hours=3),
     desc='帝都与魔都的大战',
-    fighter1 = Fighter(
+    fighter0 = Fighter(
       name='北京',
       photo='http://www.williamlong.info/google/upload/497_2.jpg',
       desc='帝都'
     ),
 
-    fighter2 = Fighter(
+    fighter1 = Fighter(
       name='上海',
       photo='http://a2.att.hudong.com/55/24/14300000491308127624242862280.jpg',
       desc='魔都'
