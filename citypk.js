@@ -27,6 +27,7 @@ window.BATTLE = Backbone.Model.extend({
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
 							posts: f.posts,
+							city: fid,
 							url: '/api/posts/'+window.bf_id+'/'+fid+'/'
 					});
 				
@@ -43,24 +44,44 @@ window.BATTLE = Backbone.Model.extend({
 
 
 // ===================================================================================================
-// COLLECTION : FIGHTER POSTS
+// MODEL : FIGHTER POSTS
 window.FIGHTER = Backbone.Model.extend({
-	model: 'post',
 	initialize: function() {
+		var city = this.get('city');
 		
+		if (typeof window.posts[city] == 'undefined'){
+			window.posts[city] = new POSTS({
+				id: 'fighter'+city+'posts'
+			});
+		}
 		
+		this.bind('change',function(){
+			window.posts[this.get('city')].render();
+		});			
+	},
+	update: function() {
+	
+
+	
 	}
 });
 
 
 // ===================================================================================================
-// MODEL : POST
-window.POST = Backbone.Collection.extend({
-	initialize: function() {
-		
+// VIEW : POSTS
+
+
+window.POSTS = Backbone.View.extend({
+	tagName: 'div',
+	events: {
+		'click .refresh': 'refresh'
+	},
+	initialize: function(){
+		this.render();
+	},
+	refresh: function(){
 	}
 });
-
 
 // ===================================================================================================
 // CLASS : ROUTER
