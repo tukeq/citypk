@@ -63,12 +63,15 @@ Return:
 {
   bf_id: 12345, // which battle field this is for
   fighter: 0/1,  // which fighter we want to know
-  posts: [
+  posts: [{
     post_id: 123456, // id for the post,
     author_id: 3445236, // weibo account id,
     comment: "this is cool", // comment user posted.
     photo_url: "http://test.com/test.jpg",
-  ]
+  }, {
+
+  }]
+  }
 }
 
 1.4

@@ -1,0 +1,30 @@
+{
+  bf_id: '4da5cb4fd47a10035c000023',
+  fighter: 0,
+  posts: [{
+    post_id: '4da5cb4fd47a10035c000133',
+    author_id: 1737931304,
+    comment: "我们最爱南锣鼓巷，有历史，有文化，哇哈哈",
+    photo_url: "http://zhuanti.soulv.com/uploads/allimg/100713/4_100713131828_1.jpg"
+  }, {
+    post_id: '4da5cb4fd47a10035c000133',
+    author_id: 1737931304,
+    comment: "我们最爱南锣鼓巷，有历史，有文化，哇哈哈",
+    photo_url: "http://zhuanti.soulv.com/uploads/allimg/100713/4_100713131828_1.jpg"
+  }, {
+    post_id: '4da5cb4fd47a10035c000133',
+    author_id: 1737931304,
+    comment: "我们最爱南锣鼓巷，有历史，有文化，哇哈哈",
+    photo_url: "http://zhuanti.soulv.com/uploads/allimg/100713/4_100713131828_1.jpg"
+  }, {
+    post_id: '4da5cb4fd47a10035c000133',
+    author_id: 1737931304,
+    comment: "我们最爱南锣鼓巷，有历史，有文化，哇哈哈",
+    photo_url: "http://zhuanti.soulv.com/uploads/allimg/100713/4_100713131828_1.jpg"
+  }, {
+    post_id: '4da5cb4fd47a10035c000133',
+    author_id: 1737931304,
+    comment: "我们最爱南锣鼓巷，有历史，有文化，哇哈哈",
+    photo_url: "http://zhuanti.soulv.com/uploads/allimg/100713/4_100713131828_1.jpg"
+  }]
+}
