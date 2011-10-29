@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from vendors.models import User
 
 from weibopy import OAuthHandler, oauth, WeibopError
 from tornado.options import define, options
@@ -59,6 +60,7 @@ class AuthLoginCheckHandler(BaseHandler):
         api = API(auth_client)
 
         # save the user info to database
+        # user = User.objects.get_or_create()
 
 
         self.session['me'] = api.me()
