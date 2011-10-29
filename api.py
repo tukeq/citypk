@@ -105,8 +105,21 @@ class PostMessageHandler(RequestHandler):
     }))
 
 class PostVoteHandler(RequestHandler):
+  @login_required
   def post(self):
     data = json.loads(self.request.body)
     post_id = data.get('post_id')
+    weibo_id=self.session['me']
+    user = User.objects.get(weibo_id=weibo_id)
     post = Post.objects.get(id=post_id)
-    
+    post.vote_by(user)
+    pn('fight')
+
+def pn(message, update=False, winner=0, delta={}):
+  for l in LISTENERS:
+        l.write_message(json.dumps({
+          'update':update,
+          'broadcast':message,
+          'winner':winner,
+          'delta':delta
+        }))
