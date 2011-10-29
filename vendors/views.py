@@ -48,7 +48,14 @@ class BattleViewHandler(BaseHandler):
 class BattleViewHandler2(BaseHandler):
     @login_required
     def get(self, id):
-        self.render('battle2.html', host=options.host, port=options.port, bf_id=id, battle=Battle.objects.get(id=id).to_dict())
+        self.render('battle2.html', host=options.host, port=options.port, bf_id=id,
+                    battle=Battle.objects.get(id=id).to_dict(detail=True),
+#                    fighter0hottest=Post.battle_posts(battle, 0, 'hottest'),
+#                    fighter0recent=Post.battle_posts(battle, 0, 'recent'),
+#                    fighter1hottest=Post.battle_posts(battle, 1, 'hottest'),
+#                    fighter1recent=Post.battle_posts(battle, 1, 'recent'),
+
+        )
 
     def post(self, *args, **kwargs):
         print('get message')
