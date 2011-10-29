@@ -138,7 +138,15 @@ class  Post(Document):
   def battle_posts(cls, battle, fighter, type):
     if type == 'recent':
       return Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-created_on')[:5]
+
     return Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-votes')[:5]
+
+  def vote_by(self, user):
+    if user not in self.voters:
+      self.voters.append(user)
+      self.votes += 1
+      self.save()
+
 
   def to_dict(self):
     """
@@ -171,7 +179,7 @@ def _init_data():
     desc='帝都与魔都的大战',
     fighter1 = Fighter(
       name='北京',
-      photo='http://www.williamlong.info/google/upload/497_2.jpg     ',
+      photo='http://www.williamlong.info/google/upload/497_2.jpg',
       desc='帝都'
     ),
 
