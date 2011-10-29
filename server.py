@@ -14,7 +14,7 @@ from mongoengine import connect
 from vendors import const
 from vendors.api import BattleHandler, BattleListHandler, PostListHandler, PostMessageHandler, PostVoteHandler
 from vendors.base_handler import BaseHandler
-from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
+from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler, AuthLoginViewHandler
 import vendors.tornado_session as session
 from vendors.views import IndexHandler, BattleViewHandler, BattleViewHandler2
 
@@ -42,6 +42,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/', IndexHandler),
             (r'/login', AuthLoginHandler),
+            (r'/login-form', AuthLoginViewHandler),
             (r'/login_check', AuthLoginCheckHandler),
             (r'/logout', AuthLogoutHandler),
             (r'/messages', RealtimeHandler),

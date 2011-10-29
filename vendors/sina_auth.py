@@ -94,6 +94,9 @@ class AuthLoginHandler(BaseHandler):
         return self.redirect(auth_url)
 
 
+class AuthLoginViewHandler(BaseHandler):
+    def get(self):
+      return self.render('login.html')
 
 class AuthLogoutHandler(BaseHandler):
     def get(self):
@@ -110,6 +113,6 @@ def login_required(func):
         request = argkw.get('request') or argc[0]
         access_token = request.session.get('oauth_access_token')
         if access_token is None:
-            return request.redirect('/login')
+            return request.redirect('/login-form')
         return func(*argc, **argkw)
     return new_func
