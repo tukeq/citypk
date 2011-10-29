@@ -157,12 +157,9 @@ class  Post(Document):
   def vote_by(self, user):
     if user not in self.voters:
       self.voters.append(user)
-      self.votes += 1
-      self.save()
-      return True
-
-    return False
-
+    self.votes += 1
+    self.save()
+    return True
 
   def to_dict(self):
     """
