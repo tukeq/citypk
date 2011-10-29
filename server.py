@@ -62,6 +62,7 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             xsrf_cookies=False,
+            debug=True,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
         self.session_manager = session.TornadoSessionManager(settings["session_secret"], settings["session_dir"])

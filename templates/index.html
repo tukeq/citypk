@@ -76,9 +76,9 @@
     <div class="container">
       <ul>
       {% for battle in battles%}
-        {% block battle %}
+
           <li><a href="/battles/{{battle.id}}"><img src="{{battle.fighter1.photo}}" width="200" height="200"> VS. <img src="{{battle.fighter2.photo}}" width="200" height="200"></a></li>
-        {% end %}
+        
       {% end %}
       </ul>
     </div>
