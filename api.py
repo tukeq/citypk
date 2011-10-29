@@ -69,6 +69,7 @@ class PostMessageHandler(BaseHandler):
       photo_url = img
     )
     post.save()
+    post.battle.blood(fighter, 15)
     pn('post a new message')
     self.write(json.dumps({
       'post_id': str(post.id),
