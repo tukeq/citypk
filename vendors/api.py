@@ -57,7 +57,8 @@ class PostMessageHandler(BaseHandler):
     try:
       battle = Battle.objects.get(id=bf_id)
       user = User.objects.get(weibo_id=weibo_id)
-    except:
+    except Exception as ex:
+      logger.error('error:%s', ex, exc_info=True)
       self.write(json.dumps({
         'post_id': None,
         'status': 0,
@@ -73,7 +74,9 @@ class PostMessageHandler(BaseHandler):
     )
     post.save()
     post.battle.blood(fighter, 15)
+    logger.info('post success')
     pn('post a new message')
+
     self.write(json.dumps({
       'post_id': str(post.id),
       'status': 1,
