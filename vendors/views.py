@@ -43,3 +43,15 @@ class BattleViewHandler(BaseHandler):
 #        print(self.request.)
         for listener in LISTENERS:
           listener.write_message('this is from server, websocket is okay')
+
+
+class BattleViewHandler2(BaseHandler):
+    @login_required
+    def get(self, id):
+        self.render('battle2.html', host=options.host, port=options.port, bf_id=id, battle=Battle.objects.get(id=id).to_dict())
+
+    def post(self, *args, **kwargs):
+        print('get message')
+#        print(self.request.)
+        for listener in LISTENERS:
+          listener.write_message('this is from server, websocket is okay')
