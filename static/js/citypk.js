@@ -54,7 +54,14 @@ window.BATTLE = Backbone.Model.extend({
 				// LOAD BATTLE PLAYERS
 				_.each(b.get('fighters'),function(f){
 					$('#fighter'+fid+'pic').attr('src',f.current_photo);
-					$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
+					if (f.blood/10 != $('#fighter'+fid+'blood .blood').css('width')) {
+						$('#hp'+fid).animate({
+    						opacity: 0.25
+    					}, 100, function() {
+    						$('#hp'+fid).animate({ opacity: 1 }, 300);
+    					});
+						$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
+					}
 					window.fighter[fid].fetch({
 						success: function(p){
 							//console.log(window.fighter[fid].toJSON());
