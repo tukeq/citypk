@@ -10,7 +10,7 @@ $.fn.spin = function(opts) {this.each(function() {var $this = $(this),spinner = 
 window.BATTLE = Backbone.Model.extend({
 	initialize: function() {
 		var b = this;
-		this.url = 'api/battle/'+this.id;
+		this.url = '../api/battle/'+this.id;
 		this.fetch({
 			success: function(r){
 				
@@ -80,7 +80,7 @@ window.FIGHTER = Backbone.Model.extend({
 		var fighter = this.get('fighter'),
 			posts = this.get('posts');
 	
-		this.url = 'api/posts/'+window.bf_id+'/'+fighter;
+		this.url = '../api/posts/'+window.bf_id+'/'+fighter;
 
 		window.posts[fighter] = new POSTS({
 			id: 'fighter'+fighter+'posts',
@@ -120,7 +120,7 @@ window.POSTS = Backbone.View.extend({
 	upvote: function(t){
 		$.ajax({
 			type: 'POST',
-			url: 'api/vote',
+			url: '../api/vote',
 			data: {
 				post_id: $(t.currentTarget).attr('rel')
 			},
@@ -175,7 +175,7 @@ window.SUBMIT = Backbone.View.extend({
 		
 		$.ajax({
 			type: 'POST',
-			url: 'api/post',
+			url: '../api/post',
 			data: {
 				bf_id: battle.id,
 				fighter: $(t.currentTarget).attr('rel'),
