@@ -24,6 +24,8 @@ window.BATTLE = Backbone.Model.extend({
 					$('#fighter'+fid+'name').html(f.name); // NAME
 					$('#fighter'+fid+'desc').html(f.description); // DESCRIPTION
 					
+					// PROGRESS BARS
+					
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
 							posts: f.posts,
@@ -81,6 +83,29 @@ window.POSTS = Backbone.View.extend({
 	},
 	refresh: function(){
 	
+	}
+});
+
+
+// ===================================================================================================
+// VIEW : SUBMIT
+
+
+window.SUBMIT = Backbone.View.extend({
+	tagName: 'div',
+	id: 'submit',
+	events: {
+		'click .submit': 'submit'
+	},
+	initialize: function(){
+		this.render();
+	},
+	submit: function(){
+		
+		/*$.post({
+		
+		});*/
+		
 	}
 });
 
