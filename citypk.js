@@ -23,6 +23,9 @@ window.BATTLE = Backbone.Model.extend({
 					// UPDATE UI WITH FIGHTER INFO
 					$('#fighter'+fid+'name').html(f.name); // NAME
 					$('#fighter'+fid+'desc').html(f.description); // DESCRIPTION
+					$('#fighter'+fid+'pic').attr('src',f.pic_url); // IMAGE
+					
+					
 					
 					// PROGRESS BARS
 					
