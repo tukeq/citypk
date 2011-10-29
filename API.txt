@@ -67,6 +67,7 @@ Return:
     author_avatar: xxx
     comment: "this is cool", // comment user posted.
     photo_url: "http://test.com/test.jpg",
+    votes: 100
   }]
 
 1.4
