@@ -35,11 +35,59 @@ class IndexHandler(tornado.web.RequestHandler):
         self.render('index.html')
 
     def post(self, *args, **kwargs):
+
         print('get message')
 #        print(self.request.)
         for listener in LISTENERS:
           listener.write_message('this is from server, websocket is okay')
 
+
+"""
+
+
+USER = hash{
+    id
+    name
+    avatar
+}
+
+
+BATTLE = hash{
+  id
+  start
+  end
+  description
+  status
+  fighters = [{id0, photo, blood, desc, posts}, {id1, photo, blood, desc}]
+  winner
+  participants=[user_id,...]
+}
+
+POSTS
+{
+id
+battle_id
+content
+photo_url
+voters=[user_id,...]
+created_at
+}
+
+
+
+
+
+
+
+"""
+
+
+# API: get battle field list
+"""
+{
+
+}
+"""
 
 
 def start_web():

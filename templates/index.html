@@ -12,7 +12,7 @@
 //                  var received_msg = $.parseJSON(evt.data);
                 alert(evt.data);
             };
-            ws.onclose = function() { };
+            ws.onclose = function() {};
             $('#send').click(function(){
               $.post('http://localhost:8000/', {
                 sss:"test"
