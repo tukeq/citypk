@@ -129,7 +129,9 @@ window.POSTS = Backbone.View.extend({
 					// UPDATE UI
 					
 					submit.charge(50);
-					console.log('good stuff');
+					$('.successMsg').html('your upvote was successful').slideDown(1000,function(){
+						$('.successMsg').delay(2000).slideUp();
+					});
 				} else {
 					alert('holy shit!');
 				}
@@ -287,7 +289,9 @@ $(function(){
 	Backbone.history.start();
 });
 
-$('.log-tabs').click(function(){
+$('.log-tabs li a').click(function(){
+	$('li.active',$(this).parent().parent()).removeClass('active');
+	$(this).parent().addClass('active');
 	$('#fighter'+$(this).attr('fighter')+'posts ul').hide();
 	$('#fighter'+$(this).attr('fighter')+$(this).attr('rel')).show();
 	return false;
