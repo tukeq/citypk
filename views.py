@@ -19,7 +19,7 @@ import vendors.tornado_session as session
 class IndexHandler(BaseHandler):
     @login_required
     def get(self, *args, **kargs):
-        self.render('index.html', host=options.host, port=options.port)
+        self.render('index.html', battles=Battle.get_list())
 
     def post(self, *args, **kwargs):
         print('get message')

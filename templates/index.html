@@ -58,6 +58,10 @@
         padding: 0px 10px;
       }
 
+      .li{
+        list-style: none;
+      }
+
     </style>
 
     <!-- Le fav and touch icons -->
@@ -65,142 +69,18 @@
     <link rel="apple-touch-icon" href="static/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="static/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="static/images/apple-touch-icon-114x114.png">
+
   </head>
 
   <body>
     <div class="container">
-      <div class="content">
-        <div class="page-header">
-          <div class='span7'><div id='fighter0hp'></div></div>
-          <div class='span2'><div id='countdown-timer'>2 : 49</div></div>
-          <div class='span7'><div id='fighter1hp'></div></div>
-          <div class='clear'></div>
-        </div>
-        <div class="row">
-          <div class="span4">
-          	<ul class="tabs">
-			  <li class="active"><a href="#">Hot</a></li>
-			  <li><a href="#">New</a></li>
-			</ul>
-            <div class='combat-log' id='fighter0hot'>
-              <ul class='unstyled'>
-                <li id='fighter0hot0'>
-                  <div>
-                    <div>
-                      <img class='thumbnail' src='' />
-                      <a href='#'><img class='thumb' src='' /></a>
-                      (125)
-                    </div>
-                    disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</div>
-                  <img class='combat-img' src='' />
-                </li>
-                <li id='fighter0hot1'>
-                  <div>
-                    <div>
-                      <img class='thumbnail' src='' />
-                      <a href='#'><img class='thumb' src='' /></a>
-                      (125)
-                    </div>
-                    disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</div>
-                </li>
-                <li id='fighter0hot2'>
-                  <div>
-                    <div>
-                      <img class='thumbnail' src='' />
-                      <a href='#'><img class='thumb' src='' /></a>
-                      (125)
-                    </div>
-                    disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</div>
-                  <img class='combat-img' src='' />
-                </li>
-              </ul>
-            </div>
-            <div class='combat-log hidden' id='fighter0new'>
-              <ul class='unstyled'>
-                <li id='fighter0new0'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-                <li id='fighter0new1'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                </li>
-                <li id='fighter0new2'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div style="width: 480px; float: left;">
-            <div class='bullet'></div>
-            <div class='span4'>
-                <h4>北京</h4>
-                <img src="" style="width: 220px; height: 220px;" />
-            </div>
-            <div class='span4'>
-                <h4>上海</h4>
-                <img src="" style="width: 220px; height: 220px;" />
-            </div>
-            <div class='clear'></div>
-            <div class='post-new'>
-                <textarea id="punch"></textarea>
-                <div id='energy-bar'><div></div></div>
-                <div id='fighter0support' class='btn'>support BJ</div>
-                <div id='fighter1support' class='btn'>support SH</div>
-            </div>
-          </div>
-          <div class="span4">
-          	<ul class="tabs">
-			  <li class="active"><a href="#">Hot</a></li>
-			  <li><a href="#">New</a></li>
-			</ul>
-            <div class='combat-log' id='fighter1hot'>
-              <ul class='unstyled'>
-                <li id='fighter1hot0'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-                <li id='fighter1hot1'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                </li>
-                <li id='fighter1hot2'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-              </ul>
-            </div>
-            <div class='combat-log hidden' id='fighter1new'>
-              <ul class='unstyled'>
-                <li id='fighter1new0'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-                <li id='fighter1new1'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                </li>
-                <li id='fighter1new2'>
-                  <p><img class='thumbnail' src='' />disp led isplay mes sage here mess age here mess age here mess age he reme ssa ge her emes sage he rem es sage h eremes sag e her em es sage h erem essa ge he reme ssa ge here</p>
-                  <img class='combat-img' src='' />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- /row -->
-      </div>
-    </div> <!-- /container -->
-    <script language="javascript">
-      $(function() {
-        $('#fighter0support').click(function() {
-          var data = {
-            bf_id: "4eac2311421aa91bc8000000",
-            fighter: 0,
-            comment: $('#punch').val()
-          };
-          $.postJSON('/api/post', data, function(data) {
-            alert(JSON.stringify(data));
-          });
-        })
-      });
-    </script>
+      <ul>
+      {% for battle in battles%}
+        {% block battle %}
+          <li><a href="/battles/{{battle.id}}"><img src="{{battle.fighter1.photo}}" width="200" height="200"> VS. <img src="{{battle.fighter2.photo}}" width="200" height="200"></a></li>
+        {% end %}
+      {% end %}
+      </ul>
+    </div>
   </body>
 </html>

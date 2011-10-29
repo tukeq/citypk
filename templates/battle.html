@@ -143,8 +143,8 @@
             <div class='post-new'>
                 <textarea></textarea>
                 <div id='energy-bar'><div></div></div>
-                <div id='fighter0support' class='btn'>support BJ</div>
-                <div id='fighter1support' class='btn'>support SH</div>
+                <div id='fighter1support' class='btn'>support BJ</div>
+                <div id='fighter2support' class='btn'>support SH</div>
             </div>
           </div>
           <div class="span4">
@@ -186,6 +186,20 @@
         </div> <!-- /row -->
       </div>
     </div> <!-- /container -->
+    <script language="javascript">
+      $(function() {
+        $('#fighter1support').click(function() {
+          var data = {
+            bf_id: "4eac2311421aa91bc8000000",
+            fighter: 0,
+            comment: $('#punch').val()
+          };
+          $.postJSON('/api/post', data, function(data) {
+            alert(JSON.stringify(data));
+          });
+        })
+      });
+    </script>
 
   </body>
 </html>

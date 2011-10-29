@@ -171,7 +171,7 @@ class  Post(Document):
     }
 
 def _init_data():
-  connect('citypk')
+
   battle = Battle(
 
     start=datetime.now(),
@@ -185,18 +185,23 @@ def _init_data():
 
     fighter2 = Fighter(
       name='上海',
-      photo='http://imgs.soufun.com/news/2010_05/13/office/1273713782423_000.jpg',
+      photo='http://a2.att.hudong.com/55/24/14300000491308127624242862280.jpg',
       desc='魔都'
     ),
   )
 
   battle.save()
 
+
+def _clear():
+  for b in Battle.objects:
+    b.delete()
+
 if __name__ == "__main__":
-#  _init_data()
   connect('citypk')
-  battle=Battle.objects[0]
-  print(battle)
+  _clear()
+  _init_data()
+
 
 
 
