@@ -85,7 +85,10 @@ class PostMessageHandler(BaseHandler):
       photo_url = img
     )
     post.save()
-    post.battle.blood(1 if fighter==0 else 0, 15)
+    fighter_to_blood = 1 if fighter == 0 else 0
+
+    post.battle.blood(fighter_to_blood, 15)
+    
     logger.info('post success')
     pn('Fight: post a new message')
 
