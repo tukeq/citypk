@@ -43,6 +43,7 @@ URL: http://test.com/api/battle/{bf_id}
   time_left: 10800, // how many seconds this battle will be over
   fighters: [{  // city 0
     name: 'BJ',
+    current_photo: 'http://test.com/bj.jpg',
     description: 'BJ is bla bla bla...',
     blood: 10, // how many blood left
     recent_posts: {
@@ -66,7 +67,7 @@ Return:
     post_id: 123456, // id for the post,
     author_id: 3445236, // weibo account id,
     comment: "this is cool", // comment user posted.
-    photo_url: "",
+    photo_url: "http://test.com/test.jpg",
   ]
 }
 
