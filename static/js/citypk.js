@@ -120,32 +120,33 @@ window.POSTS = Backbone.View.extend({
 	upvote: function(t){
 
 		if (window.energy < 100) {
-			return alert('energy insufficient');
+			alert('energy insufficient');
 		}
-	
-		$.ajax({
-			type: 'POST',
-			url: '/api/vote',
-			data: {
-				post_id: $(t.currentTarget).attr('rel')
-			},
-			success: function(r){
-				if (r.status){
-					// UPDATE UI
-					
-					submit.charge(50);
-					$('.successMsg').html('your upvote was successful').slideDown(1000,function(){
-						$('.successMsg').delay(2000).slideUp();
-					});
-				} else {
-					alert('holy shit!');
-				}
-			},
-			error: function(){
-				alert('wtf!');
-			},
-			dataType: 'json'
-		});
+		else {	
+			$.ajax({
+				type: 'POST',
+				url: '/api/vote',
+				data: {
+					post_id: $(t.currentTarget).attr('rel')
+				},
+				success: function(r){
+					if (r.status){
+						// UPDATE UI
+						
+						submit.charge(50);
+						$('.successMsg').html('your upvote was successful').slideDown(1000,function(){
+							$('.successMsg').delay(2000).slideUp();
+						});
+					} else {
+						alert('holy shit!');
+					}
+				},
+				error: function(){
+					alert('wtf!');
+				},
+				dataType: 'json'
+			});
+		}
 		return false;
 	}
 });
@@ -177,35 +178,35 @@ window.SUBMIT = Backbone.View.extend({
 		}
 		
 		if (window.energy < 100) {
-			return alert('energy insufficient');
+			alert('energy insufficient');
 		}
-		
-		$.ajax({
-			type: 'POST',
-			url: '/api/post',
-			data: {
-				bf_id: battle.id,
-				fighter: $(t.currentTarget).attr('rel'),
-				comment: comment
-			},
-			success: function(r){
-				if (r.status){	
-					// RESET CHARGE
-					sf.charge(100);
-					$('.successMsg').html('your post was successful').slideDown(1000,function(){
-						$('.successMsg').delay(2000).slideUp();
-					});
-					
-				} else {
-					alert('holy shit!');
-				}
-			},
-			error: function(){
-				alert('wtf!');
-			},
-			dataType: 'json'
-		});
-		
+		else {
+			$.ajax({
+				type: 'POST',
+				url: '/api/post',
+				data: {
+					bf_id: battle.id,
+					fighter: $(t.currentTarget).attr('rel'),
+					comment: comment
+				},
+				success: function(r){
+					if (r.status){	
+						// RESET CHARGE
+						sf.charge(100);
+						$('.successMsg').html('your post was successful').slideDown(1000,function(){
+							$('.successMsg').delay(2000).slideUp();
+						});
+						
+					} else {
+						alert('holy shit!');
+					}
+				},
+				error: function(){
+					alert('wtf!');
+				},
+				dataType: 'json'
+			});
+		}		
 		return false;
 	},
 	charge: function(value){
