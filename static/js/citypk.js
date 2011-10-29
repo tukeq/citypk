@@ -118,6 +118,11 @@ window.POSTS = Backbone.View.extend({
 		return this;
 	},
 	upvote: function(t){
+
+		if (window.energy < 100) {
+			return alert('energy insufficient');
+		}
+	
 		$.ajax({
 			type: 'POST',
 			url: '/api/vote',
@@ -172,7 +177,7 @@ window.SUBMIT = Backbone.View.extend({
 		}
 		
 		if (window.energy < 100) {
-			alert('energy insufficient');
+			return alert('energy insufficient');
 		}
 		
 		$.ajax({
