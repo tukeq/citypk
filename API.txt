@@ -85,6 +85,7 @@ post to: http://test.com/api/post
 }
 return:
 {
+  'post_id': 123456,
   'status': 1|0, // success/fail
   'message': 'some failing message'
 }

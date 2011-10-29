@@ -10,6 +10,9 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
+from mongoengine import connect
+import const
+from api import *
 
 
 LISTENERS = []
@@ -97,9 +100,15 @@ def start_web():
             )
 
     application = tornado.web.Application([
-                                                  (r'/', IndexHandler),
-                                                  (r'/messages', RealtimeHandler),
-                                                  ], **settings)
+            (r'/', IndexHandler),
+            (r'/messages', RealtimeHandler),
+            (r'/api/battles', BattleListHandler),
+            (r'/api/battle/%s' % const.MATCH_NAME, BattleHandler),
+            (r'/api/posts/%s/([0|1])/%s' % (const.MATCH_NAME, const.MATCH_NAME), PostListHandler),
+            (r'/api/post', PostMessageHandler),
+            (r'/api/vote', PostVoteHandler),
+
+            ], **settings)
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
@@ -108,6 +117,7 @@ def start_web():
 
 if __name__ == "__main__":
     print('server start on %s' % options.port)
+    connect('citypk')
     start_web()
 
 
