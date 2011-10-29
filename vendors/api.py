@@ -33,18 +33,18 @@ class RealtimeHandler(tornado.websocket.WebSocketHandler):
     def on_close(self):
         LISTENERS.remove(self)
 
-class BattleListHandler(RequestHandler):
+class BattleListHandler(BaseHandler):
   def get(self):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     battles = [b.to_dict() for b in Battle.get_list()]
     self.write(json.dumps(battles))
 
-class BattleHandler(RequestHandler):
+class BattleHandler(BaseHandler):
   def get(self, bf_id):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     self.write(json.dumps(Battle.objects.get(id=bf_id).to_dict(detail=True)))
 
-class PostListHandler(RequestHandler):
+class PostListHandler(BaseHandler):
   def get(self, bf_id, fighter):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     battle = Battle.objects.get(id=bf_id)
@@ -95,7 +95,7 @@ class PostMessageHandler(BaseHandler):
     }))
 
 
-class PostVoteHandler(RequestHandler):
+class PostVoteHandler(BaseHandler):
   @login_required
   def post(self):
     data = json.loads(self.request.body)

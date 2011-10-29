@@ -39,7 +39,7 @@ class Fighter(EmbeddedDocument):
     """
     return {
       'name': self.name,
-      'photo': self.photo,
+      'current_photo': self.photo,
       'blood': self.blood,
       'desc': self.desc,
       }
@@ -119,15 +119,15 @@ class Battle(Document):
       'status': self.status,
       'winner': self.winner,
       'time_left': self.time_left,
-      'fighter0': self.fighter0.to_dict(),
-      'fighter1': self.fighter1.to_dict(),
+      'fighters': [self.fighter0.to_dict(), self.fighter1.to_dict()],
+#      'fighter1': self.fighter1.to_dict(),
       }
     if detail:
-      info['fighter0'].update({
+      info['fighters'][0].update({
         'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 0, 'recent')],
         'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 0, 'hottest')]
       })
-      info['fighter1'].update({
+      info['fighters'][1].update({
         'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'recent')],
         'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'hottest')]
       })
