@@ -12,7 +12,7 @@ from fabric.api import *
 
 DEPLOY_DIR = '~/citypk'
 
-env.hosts = ['']
+env.hosts = ['50.18.172.94']
 env.user = 'ubuntu'
 
 def deploy():
