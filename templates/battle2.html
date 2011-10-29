@@ -111,7 +111,9 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <!--<img class='combat-img' src="{{ p['photo_url'] }}" />-->
+          {% if p['photo_url'] %}
+          <img class='combat-img' src="{{ p['photo_url'] }}" />
+          {% end %}
           </li>
       {% end %}
       </ul>
@@ -123,8 +125,9 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <!--<img class='combat-img' src="{{ p['photo_url'] }}" />-->
-          
+          {% if p['photo_url'] %}
+          <img class='combat-img' src="{{ p['photo_url'] }}" />
+          {% end %}
           </li>
       {% end %}
       </ul>
@@ -181,6 +184,9 @@
             <a href="#" rel="{{ p['post_id'] }}" class="upvote"><div></div></a>({{ p['votes'] }})
           </div>
           {{ p['comment'] }}</div>
+            {% if p['photo_url'] %}
+          <img class='combat-img' src="{{ p['photo_url'] }}" />
+          {% end %}
           <div class='clear'></div>
           </li>
        {% end %}
@@ -192,6 +198,9 @@
             <a href="#" rel="{{ p['post_id'] }}" class="upvote"><div></div></a>({{ p['votes'] }})
           </div>
           {{ p['comment'] }}</div>
+            {% if p['photo_url'] %}
+          <img class='combat-img' src="{{ p['photo_url'] }}" />
+          {% end %}
           <div class='clear'></div>
           </li>
       {% end %}
