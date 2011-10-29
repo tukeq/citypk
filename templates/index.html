@@ -13,7 +13,8 @@
 
     <!-- Le styles -->
     <link rel="stylesheet/less" href="static/lib/bootstrap.less">
-	<script src="static/js/less-1.1.3.min.js"></script>
+	  <script src="static/js/less-1.1.3.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <style type="text/css">
       /* Override some defaults */
       html, body {
@@ -141,7 +142,7 @@
             </div>
             <div class='clear'></div>
             <div class='post-new'>
-                <textarea></textarea>
+                <textarea id="punch"></textarea>
                 <div id='energy-bar'><div></div></div>
                 <div id='fighter0support' class='btn'>support BJ</div>
                 <div id='fighter1support' class='btn'>support SH</div>
@@ -186,6 +187,19 @@
         </div> <!-- /row -->
       </div>
     </div> <!-- /container -->
-
+    <script language="javascript">
+      $(function() {
+        $('#fighter0support').click(function() {
+          var data = {
+            bf_id: 'asdf',
+            fighter: 0,
+            comment: $('#punch').val()
+          };
+          $.post('/api/post', data, function(data) {
+            alert(data);
+          }, 'json');
+        })
+      });
+    </script>
   </body>
 </html>

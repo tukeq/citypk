@@ -13,8 +13,10 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
+from util import get_first_url_from_string
 
 from vendors.models import *
+from vendors.sina_auth import login_required
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -68,8 +70,39 @@ class PostListHandler(RequestHandler):
     self.write(json.dumps([{p.to_dict()} for p in Post.battle_posts(battle, int(fighter), type)]))
 
 class PostMessageHandler(RequestHandler):
+  @login_required
   def post(self):
-    pass
+    self.set_header('Content-Type', 'application/json;charset=utf-8')
+    data = json.loads(self.request.body)
+    bf_id = data.get('bf_id')
+    fighter = data.get('fighter')
+    comment = data.get('comment')
+    img = get_first_url_from_string(comment)
+    comment = comment.replace(img, '')
+    weibo_id = self.session['me'].id
+    try:
+      battle = Battle.objects.get(id=bf_id)
+      user = User.objects.get(weibo_id=weibo_id)
+    except:
+      self.write(json.dumps({
+        'post_id': None,
+        'status': 0,
+        'message': u'提交失败'
+      }))
+    post = Post(
+      battle = battle,
+      author = user,
+      fighter = int(fighter),
+      comment = comment,
+      photo_url = img
+    )
+    post.save()
+
+    self.write(json.dumps({
+      'post_id': post.id,
+      'status': 1,
+      'message': ''
+    }))
 
 class PostVoteHandler(RequestHandler):
   def post(self):

@@ -16,7 +16,7 @@ class User(Document):
 class Fighter(EmbeddedDocument):
   name = StringField()
   photo = StringField()
-  blood = IntField(default=1000)
+  blood = IntField(default=lambda:1000)
   desc = StringField()
 
   def to_dict(self):
@@ -50,8 +50,8 @@ class Battle(Document):
   fighter1 = EmbeddedDocumentField(Fighter)
   fighter2 = EmbeddedDocumentField(Fighter)
 
-  participants = IntField(default=lambda :0)
-  created_at = DateTimeField(default=datetime.now)
+  participants = IntField(default = lambda:0)
+  created_at = DateTimeField(default=lambda:datetime.now)
 
   @property
   def status(self):
@@ -126,13 +126,13 @@ class  Post(Document):
   author = ReferenceField(User)
   fighter = IntField()
 
-  voters = ListField(ReferenceField(User))
-  votes = IntField()
+  voters = ListField(ReferenceField(User), default=lambda:[])
+  votes = IntField(default=lambda:0)
 
   comment = StringField()
   photo_url = StringField()
 
-  created_at = DateTimeField(default=datetime.now)
+  created_at = DateTimeField(default=lambda:datetime.now)
 
   @classmethod
   def battle_posts(cls, battle, fighter, type):

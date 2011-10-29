@@ -75,7 +75,6 @@ post to: http://test.com/api/post
 {
   bf_id: 12345,
   fighter: 0/1,
-  author_id: 3445236,
   comment: "this is super cool. http://abcd.com/abcd.jpg"
 }
 return:
