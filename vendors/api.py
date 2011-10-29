@@ -38,8 +38,8 @@ class PostListHandler(RequestHandler):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     battle = Battle.objects.get(id=bf_id)
     self.write(json.dumps({
-      'recent_posts': [{p.to_dict()} for p in Post.battle_posts(battle, int(fighter), 'recent')],
-      'hottest_posts': [{p.to_dict()} for p in Post.battle_posts(battle, int(fighter), 'hottest')],
+      'recent_posts': [p.to_dict() for p in Post.battle_posts(battle, int(fighter), 'recent')],
+      'hottest_posts': [p.to_dict() for p in Post.battle_posts(battle, int(fighter), 'hottest')],
     }))
 
 class PostMessageHandler(BaseHandler):
