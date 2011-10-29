@@ -69,9 +69,11 @@
         /*height: 66px;*/
         text-align:center;
       }
-    </style>
-	<!-- JAVASCRIPT -->
 
+      .combat-log {
+        overflow-y: scroll;
+      }
+    </style>
 
 </head>
 <body style="background: url(/static/img/background.png)">
@@ -99,7 +101,7 @@
 		</ul>
         <div class='clear'></div>
 		<div>
-      <ul class="unstyled combat-log hidden" id="fighter0hottest">
+      <ul class="unstyled combat-log" id="fighter0hottest">
       {% for p in battle['fighter0']['hottest_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
@@ -167,7 +169,7 @@
 		</ul>
         <div class='clear'></div>
 		<div>
-      <ul class="unstyled combat-log hidden" id="fighter1hottest">
+      <ul class="unstyled combat-log" id="fighter1hottest">
       {% for p in battle['fighter1']['hottest_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
