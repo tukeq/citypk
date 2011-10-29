@@ -9,31 +9,31 @@ $.fn.spin = function(opts) {this.each(function() {var $this = $(this),spinner = 
 // MODEL : BATTLE
 window.BATTLE = Backbone.Model.extend({
 	initialize: function() {
+		var b = this;
 		this.url = 'api/battle/'+this.id;
 		this.fetch({
 			success: function(r){
-				//console.log(this.get('fighters'));
 				
 				// LOAD BATTLE PLAYERS
-				_.each(this.get('fighters'),function(f){
+				_.each(b.get('fighters'),function(f){
 				
 					// SET FIGHTER ID
-					var fid = (typeof window.fighter == 'undefined') ? 0 : 1 ;
+					window.fid = (typeof window.fid == 'undefined') ? 0 : 1 ;
 					
 					// UPDATE UI WITH FIGHTER INFO
 					$('#fighter'+fid+'name').html(f.name); // NAME
 					$('#fighter'+fid+'desc').html(f.description); // DESCRIPTION
-					$('#fighter'+fid+'pic').attr('src',f.pic_url); // IMAGE
-					
-					
+					$('#fighter'+fid+'pic').attr('src',f.current_photo); // IMAGE
+					$('#fighter'+fid+'submit').attr('value','support '+f.name); // IMAGE
 					
 					// PROGRESS BARS
+					$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
 					
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
-							posts: f.posts,
-							city: fid,
-							url: '/api/posts/'+window.bf_id+'/'+fid+'/'
+							bf_id: b.id,
+							posts: f.recent_posts,
+							fighter: fid
 					});
 				
 				});			
@@ -44,6 +44,31 @@ window.BATTLE = Backbone.Model.extend({
 				//alert('oh shit!');
 			}
 		});		
+	},
+	update: function(){
+		var b = this;
+		this.fetch({
+			success: function(r){
+				
+				// LOAD BATTLE PLAYERS
+				_.each(b.get('fighters'),function(f){
+					$('#fighter'+fid+'pic').attr('src',f.current_photo);
+					$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
+					window.fighter[fid].fetch({
+						success: function(p){
+							//console.log(window.fighter[fid].toJSON());
+							window.posts[fid].render();
+						}
+					});
+				});
+			},
+			error: function(r){
+				console.log('error');
+				console.log(r);
+				//alert('oh shit!');
+			}
+		});
+		return this;
 	}
 });
 
@@ -52,22 +77,21 @@ window.BATTLE = Backbone.Model.extend({
 // MODEL : FIGHTER POSTS
 window.FIGHTER = Backbone.Model.extend({
 	initialize: function() {
-		var city = this.get('city');
-		
-		if (typeof window.posts[city] == 'undefined'){
-			window.posts[city] = new POSTS({
-				id: 'fighter'+city+'posts'
-			});
-		}
+		var fighter = this.get('fighter'),
+			posts = this.get('posts');
+	
+		this.url = 'api/posts/'+window.bf_id+'/'+fighter;
+
+		window.posts[fighter] = new POSTS({
+			id: 'fighter'+fighter+'posts',
+			fighter: fighter,
+			model: this
+		});
 		
 		this.bind('change',function(){
-			window.posts[this.get('city')].render();
-		});			
-	},
-	update: function() {
-	
-
-	
+			window.posts[fighter].render();
+		});
+		return this;
 	}
 });
 
@@ -79,12 +103,43 @@ window.FIGHTER = Backbone.Model.extend({
 window.POSTS = Backbone.View.extend({
 	tagName: 'div',
 	events: {
-		'click .refresh': 'refresh'
+		'click .upvote': 'upvote'
 	},
 	initialize: function(){
 		this.render();
 	},
-	refresh: function(){
+	render: function(){
+		var pv = this;
+		$(this.el).html(_.template($('#posts-template').html(),pv.model.toJSON()));
+		if (!$('#fighter'+this.options.fighter+' #'+this.id).length) {
+			//$(this.el).html(_.template($('#posts-template').html(),this.options));
+			$('#fighter'+this.options.fighter).append(this.el);
+		}
+		return this;
+	},
+	upvote: function(t){
+		$.ajax({
+			type: 'POST',
+			url: 'api/vote',
+			data: {
+				post_id: $(t.currentTarget).attr('rel')
+			},
+			success: function(r){
+				if (r.status){
+					// UPDATE UI
+					
+					submit.charge(50);
+					console.log('good stuff');
+				} else {
+					alert('holy shit!');
+				}
+			},
+			error: function(){
+				alert('wtf!');
+			},
+			dataType: 'json'
+		});
+		return false;
 	}
 });
 
@@ -95,19 +150,91 @@ window.POSTS = Backbone.View.extend({
 
 window.SUBMIT = Backbone.View.extend({
 	tagName: 'div',
-	id: 'submit',
+	id: 'submitPost',
 	events: {
-		'click .submit': 'submit'
+		'click .submit': 'sendPost'
 	},
 	initialize: function(){
 		this.render();
+		this.charge();
 	},
-	submit: function(){
+	render: function(){
+	
+	},
+	sendPost: function(t){
+		var sf = this,
+			comment = $('#comment').val().replace(/^\s+|\s+$/g, "");
 		
-		/*$.post({
+		if (comment == "") {
+			return alert('empty comment');
+		}
 		
-		});*/
+		if (window.energy < 100) {
+			alert('energy insufficient');
+		}
 		
+		$.ajax({
+			type: 'POST',
+			url: 'api/post',
+			data: {
+				bf_id: battle.id,
+				fighter: $(t.currentTarget).attr('rel'),
+				comment: comment
+			},
+			success: function(r){
+				if (r.status){	
+					// RESET CHARGE
+					sf.charge(100);
+					$('.successMsg').html('your post was successful').slideDown(1000,function(){
+						$('.successMsg').delay(2000).slideUp();
+					});
+					
+				} else {
+					alert('holy shit!');
+				}
+			},
+			error: function(){
+				alert('wtf!');
+			},
+			dataType: 'json'
+		});
+		
+		return false;
+	},
+	charge: function(value){
+		var sf = this;
+	
+		if (typeof window.energy == 'undefined') {
+			window.energy = 0;
+		}
+		
+		if (value) {
+			window.energy = window.energy - value;
+		}
+		
+		window.recharge = setInterval(function(){
+			// ADD CHARGE
+			if (window.energy < 100) {
+				window.energy = window.energy+5; 
+				$('#energyBar .energy').css('width',window.energy+'%');
+				// CHECK FORM DISABLED
+				if (!$('form').hasClass('inactive')) {
+					sf.disable();
+				}
+			}
+			// FULLY CHARGED -> ACTIVATE FORM
+			else {
+				clearInterval(window.recharge);
+				$('form').removeClass('inactive');
+				$('form #comment').attr('disabled',false);
+				$('form .submit').attr('disabled',false);
+			}
+		},100);
+	},
+	disable: function(){
+		$('form').addClass('inactive');
+		$('form #comment').attr('disabled',true);
+		$('form .submit').attr('disabled',true);		
 	}
 });
 
@@ -136,13 +263,19 @@ window.CITYPK = Backbone.Router.extend({
 		
 		// SET BATTLEFIELD ID
 		window.bf_id = id;
+		window.posts = new Object,
+		window.fighter = new Object;
 		
 		// CREATE BATTLE MODEL
 		window.battle = new BATTLE({
 			id: bf_id
 		});
 		
-
+		window.submit = new SUBMIT({
+			el: $('#submitPost')
+		});
+		
+		$('#loading').hide();
 		
 	}
 });

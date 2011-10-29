@@ -53,6 +53,19 @@ class Battle(Document):
   participants = IntField(default = lambda:0)
   created_at = DateTimeField(default=lambda:datetime.now())
 
+
+  def update_one(self, *args, **kwargs):
+    self.__class__.objects(id=self.id).update_one(*args, **kwargs)
+
+
+  def blood(self, fighter, amount):
+    f = self.fighter1 if fighter == 1 else self.fighter2
+    f.blood -= amount
+    if fighter == 1:
+      self.update_one(set__fighter1=f)
+    else:
+      self.update_one(set__fighter2=f)
+
   @property
   def status(self):
     if datetime.now() < self.start:
@@ -132,7 +145,7 @@ class  Post(Document):
   comment = StringField()
   photo_url = StringField()
 
-  created_at = DateTimeField(default=lambda:datetime.now)
+  created_at = DateTimeField(default=lambda:datetime.now())
 
   @classmethod
   def battle_posts(cls, battle, fighter, type):
@@ -146,6 +159,9 @@ class  Post(Document):
       self.voters.append(user)
       self.votes += 1
       self.save()
+      return True
+
+    return False
 
 
   def to_dict(self):
@@ -171,7 +187,7 @@ class  Post(Document):
     }
 
 def _init_data():
-  connect('citypk')
+
   battle = Battle(
 
     start=datetime.now(),
@@ -185,18 +201,23 @@ def _init_data():
 
     fighter2 = Fighter(
       name='上海',
-      photo='http://imgs.soufun.com/news/2010_05/13/office/1273713782423_000.jpg',
+      photo='http://a2.att.hudong.com/55/24/14300000491308127624242862280.jpg',
       desc='魔都'
     ),
   )
 
   battle.save()
 
+
+def _clear():
+  for b in Battle.objects:
+    b.delete()
+
 if __name__ == "__main__":
-#  _init_data()
   connect('citypk')
-  battle=Battle.objects[0]
-  print(battle)
+  _clear()
+  _init_data()
+
 
 
 
