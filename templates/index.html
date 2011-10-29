@@ -197,7 +197,7 @@
             comment: $('#punch').val()
           };
           $.postJSON('/api/post', data, function(data) {
-            alert(data);
+            alert(JSON.stringify(data));
           });
         })
       });
