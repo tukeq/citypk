@@ -46,11 +46,11 @@ URL: http://test.com/api/battle/{bf_id}
     current_photo: 'http://test.com/bj.jpg',
     description: 'BJ is bla bla bla...',
     blood: 10, // how many blood left
-    recent_posts: {
+    recent_posts: [{
       // see API 1.3
-    },
-    hottest_posts: {
-    }
+    }],
+    hottest_posts: [{
+    }]
   }, {          // city 1
 
   }]
