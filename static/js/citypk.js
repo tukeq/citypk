@@ -10,7 +10,7 @@ $.fn.spin = function(opts) {this.each(function() {var $this = $(this),spinner = 
 window.BATTLE = Backbone.Model.extend({
 	initialize: function() {
 		var b = this;
-		this.url = '../api/battle/'+this.id;
+		this.url = '/api/battle/'+this.id;
 		this.fetch({
 			success: function(r){
 				
@@ -49,7 +49,6 @@ window.BATTLE = Backbone.Model.extend({
 		var b = this;
 		this.fetch({
 			success: function(r){
-				
 				// LOAD BATTLE PLAYERS
 				_.each(b.get('fighters'),function(f){
 					$('#fighter'+fid+'pic').attr('src',f.current_photo);
@@ -79,7 +78,7 @@ window.FIGHTER = Backbone.Model.extend({
 	initialize: function() {
 		var fighter = this.get('fighter');
 	
-		this.url = '../api/posts/'+window.bf_id+'/'+fighter;
+		this.url = '/api/posts/'+window.bf_id+'/'+fighter;
 
 		window.posts[fighter] = new POSTS({
 			id: 'fighter'+fighter+'posts',
@@ -119,7 +118,7 @@ window.POSTS = Backbone.View.extend({
 	upvote: function(t){
 		$.ajax({
 			type: 'POST',
-			url: '../api/vote',
+			url: '/api/vote',
 			data: {
 				post_id: $(t.currentTarget).attr('rel')
 			},
@@ -174,7 +173,7 @@ window.SUBMIT = Backbone.View.extend({
 		
 		$.ajax({
 			type: 'POST',
-			url: '../api/post',
+			url: '/api/post',
 			data: {
 				bf_id: battle.id,
 				fighter: $(t.currentTarget).attr('rel'),
@@ -289,6 +288,17 @@ $('.log-tabs').click(function(){
 	$('#fighter'+$(this).attr('fighter')+$(this).attr('rel')).show();
 	return false;
 });
+
+var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
+ws.onopen = function() {};
+ws.onmessage = function (evt) {
+	var r = $.parseJSON(evt.data);
+	if (r.update) {
+		battle.update();
+	}
+};
+ws.onclose = function() {};
+
 
 
 })(jQuery);
