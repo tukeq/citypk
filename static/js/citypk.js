@@ -31,7 +31,6 @@ window.BATTLE = Backbone.Model.extend({
 					
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
-							bf_id: b.id,
 							recent: f.recent_posts,
 							hottest: f.hottest_posts,
 							fighter: fid
@@ -78,8 +77,7 @@ window.BATTLE = Backbone.Model.extend({
 // MODEL : FIGHTER POSTS
 window.FIGHTER = Backbone.Model.extend({
 	initialize: function() {
-		var fighter = this.get('fighter'),
-			posts = this.get('posts');
+		var fighter = this.get('fighter');
 	
 		this.url = '../api/posts/'+window.bf_id+'/'+fighter;
 
@@ -114,7 +112,7 @@ window.POSTS = Backbone.View.extend({
 		$(this.el).html(_.template($('#posts-template').html(),pv.model.toJSON()));
 		if (!$('#fighter'+this.options.fighter+' #'+this.id).length) {
 			//$(this.el).html(_.template($('#posts-template').html(),this.options));
-			$('#fighter'+this.options.fighter).append(this.el);
+			$('#fighter'+this.options.fighter+'posts').append(this.el);
 		}
 		return this;
 	},
@@ -216,7 +214,7 @@ window.SUBMIT = Backbone.View.extend({
 		window.recharge = setInterval(function(){
 			// ADD CHARGE
 			if (window.energy < 100) {
-				window.energy = window.energy+5; 
+				window.energy = window.energy+0.5; 
 				$('#energyBar .energy').css('width',window.energy+'%');
 				// CHECK FORM DISABLED
 				if (!$('form').hasClass('inactive')) {
@@ -287,7 +285,7 @@ $(function(){
 });
 
 $('.log-tabs').click(function(){
-	$('#fighter'+$(this).attr('fighter')+'posts div').hide();
+	$('#fighter'+$(this).attr('fighter')+'posts ul').hide();
 	$('#fighter'+$(this).attr('fighter')+$(this).attr('rel')).show();
 	return false;
 });
