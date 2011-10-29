@@ -67,12 +67,6 @@ ul.log-tabs {
         background-image: url('/static/img/tab.png');    
         }
 }
-ul.combat-log {
-    width: 250px;
-    height: 504px;
-    margin-left: -10px;
-    background-image: url('/static/img/bg_board.png')
-    }
 
 .countdown-timer {
     height: 66px;
@@ -145,9 +139,23 @@ div.post-new {
         }
     }
 
+ul.combat-log {
+    width: 250px;
+    height: 504px;
+    margin-top: -10px;
+    margin-left: -10px;
+    background-image: url('/static/img/bg_board.png')
+    }
 .combat-log {
+  margin: 0px;
   li {
-      margin-down: 3px !important;
+      width: 240px;
+      margin: 10px;
+
+      div {
+          width: 230px;
+          margin: 5px;
+    }
       }
   li > div > div {
     width: 46px;
@@ -169,5 +177,6 @@ div.post-new {
   img.combat-img {
     width: 200px;
     height: 115px;
+    margin-left: 15px;
   }
 }

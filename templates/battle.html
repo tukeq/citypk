@@ -165,24 +165,26 @@
 
 <script type="text/template" id="posts-template">
 
-<ul class="unstyled" id="fighter<%= fighter %>recent">
+<ul class="unstyled combat-log hidden" id="fighter<%= fighter %>recent">
 	<% _.each(recent,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
+			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a>(125)
 		</div>
 		<%= p.comment %></div>
+        <div class='clear'></div>
 		<img class='combat-img' src="<%= p.photo_url %>" /></li>
 	<% }); %>
 </ul>
 
-<ul class="unstyled" id="fighter<%= fighter %>hot">
+<ul class="unstyled combat-log" id="fighter<%= fighter %>hot">
 	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
+			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a> (125)
 		</div>
 		<%= p.comment %></div>
+        <div class='clear'></div>
 		<img class='combat-img' src="<%= p.photo_url %>" /></li>
 	<% }); %>
 </ul>
