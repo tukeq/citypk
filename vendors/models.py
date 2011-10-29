@@ -51,7 +51,7 @@ class Battle(Document):
   fighter2 = EmbeddedDocumentField(Fighter)
 
   participants = IntField(default = lambda:0)
-  created_at = DateTimeField(default=lambda:datetime.now)
+  created_at = DateTimeField(default=lambda:datetime.now())
 
   @property
   def status(self):

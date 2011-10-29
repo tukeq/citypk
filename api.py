@@ -69,7 +69,7 @@ class PostListHandler(RequestHandler):
     battle = Battle.objects.get(id=bf_id)
     self.write(json.dumps([{p.to_dict()} for p in Post.battle_posts(battle, int(fighter), type)]))
 
-class PostMessageHandler(RequestHandler):
+class PostMessageHandler(BaseHandler):
   @login_required
   def post(self):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
