@@ -14,7 +14,7 @@ consumer_key = '3546266617'
 consumer_secret = 'ca0777ad67c0cc4aa19b130a6522fe01'
 
 class WebOAuthHandler(OAuthHandler):
-    def get_authorization_url_with_callback(self, callback, signin_with_twitter=False):
+    def get_authorization_url_with_callback(self, callback, signin_with_twitter=False, parameters={}):
         """Get the authorization URL to redirect the user"""
         try:
             # get the request token
@@ -25,7 +25,7 @@ class WebOAuthHandler(OAuthHandler):
             else:
                 url = self._get_oauth_url('authorize')
             request = oauth.OAuthRequest.from_token_and_callback(
-                token=self.request_token, callback=callback, http_url=url
+                token=self.request_token, callback=callback, http_url=url,parameters= parameters
             )
             return request.to_url()
         except Exception, e:
@@ -60,10 +60,15 @@ class AuthLoginCheckHandler(BaseHandler):
         api = API(auth_client)
 
         # save the user info to database
-        # user = User.objects.get_or_create()
+        info = api.me()
+        user, created = User.objects.get_or_create(weibo_id=info.id)
+        if created:
+          user.avatar = info.profile_image_url
+          user.name = info.screen_name
+          user.save()
 
 
-        self.session['me'] = api.me()
+        self.session['me'] = info
         self.session['username'] = current_user
 
         # 保存access_token，以后访问只需使用access_token即可
@@ -83,7 +88,7 @@ class AuthLoginHandler(BaseHandler):
         login_backurl = self.build_absolute_uri('/login_check')
         auth_client = _oauth()
 
-        auth_url = auth_client.get_authorization_url_with_callback(login_backurl)
+        auth_url = auth_client.get_authorization_url_with_callback(login_backurl, parameters = {'from': 'xweibo', 'xwb_cb': 'login'})
         self.session['oauth_request_token'] = auth_client.request_token
         self.session.save()
         return self.redirect(auth_url)
