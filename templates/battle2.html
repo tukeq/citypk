@@ -83,11 +83,13 @@
     <div style="margin:auto;width:261px;"><img src="/static/img/logo.png"/></div>
     <div class="page-header">
 		<div class='span7 hp-left'>
-			<div class='hp-slider' id="fighter0blood"><div id='fighter0hp' class="blood"></div></div>
+      <!--382-->
+
+			<div class='hp-slider' id="fighter0blood"><div id='fighter0hp' class="blood" style="width: {{(1000-battle['fighter0']['blood'])*382/1000}}px;float: right"></div></div>
 		</div>
 		<div class='span2 countdown-timer'><div id="javascript_countdown_time"></div></div>
 		<div class='span7 hp-right'>
-			<div class='hp-slider' id="fighter1blood"><div id='fighter1hp' class="blood"></div></div>
+			<div class='hp-slider' id="fighter1blood"><div id='fighter1hp' class="blood" style="width: {{(1000-battle['fighter1']['blood'])*382/1000}}px"></div></div>
 		</div>
 		<div class='clear'></div>
     </div>
@@ -299,7 +301,8 @@ $(function() {
       };
     }();
 //    alert(typeof javascript_countdown);
-    javascript_countdown.init(3600, 'javascript_countdown_time');
+
+    javascript_countdown.init({{battle['time_left']}}, 'javascript_countdown_time');
 
     function add_post(comment, fighter){
       var data = {

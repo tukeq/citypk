@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, unicode_literals, print_function
 from datetime import datetime, timedelta
+import logging
 from mongoengine.document import Document, EmbeddedDocument
 from mongoengine.fields import StringField, DateTimeField, IntField, EmbeddedDocumentField, ListField, ReferenceField
 from mongoengine.queryset import Q
 from const import BATTLE_ONGOING, BATTLE_FINISHED, BATTLE_NOT_STARTED
 from mongoengine import connect
+
+logger=logging.getLogger(__name__)
 
 class User(Document):
   name = StringField()
@@ -83,7 +86,9 @@ class Battle(Document):
   @property
   def time_left(self):
     if self.status == BATTLE_ONGOING:
-      return (datetime.now() - self.start).seconds
+      logger.info(datetime.now())
+      logger.info(self.end)
+      return (self.end - datetime.now()).seconds
     return 0
 
   def to_dict(self, detail=False):
