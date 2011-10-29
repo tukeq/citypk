@@ -34,10 +34,13 @@ class BattleHandler(RequestHandler):
     self.write(json.dumps(Battle.objects.get(id=bf_id).to_dict(detail=True)))
 
 class PostListHandler(RequestHandler):
-  def get(self, bf_id, fighter, type):
+  def get(self, bf_id, fighter):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     battle = Battle.objects.get(id=bf_id)
-    self.write(json.dumps([{p.to_dict()} for p in Post.battle_posts(battle, int(fighter), type)]))
+    self.write(json.dumps({
+      'recent_posts': [p.to_dict() for p in Post.battle_posts(battle, int(fighter), 'recent')],
+      'hottest_posts': [p.to_dict() for p in Post.battle_posts(battle, int(fighter), 'hottest')],
+    }))
 
 class PostMessageHandler(BaseHandler):
   @login_required

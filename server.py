@@ -14,10 +14,11 @@ from mongoengine import connect
 import const
 from api import *
 from util import get_abs_url
+from vendors.api import BattleHandler, BattleListHandler, PostListHandler, PostMessageHandler, PostVoteHandler
 from vendors.base_handler import BaseHandler
 from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
 import vendors.tornado_session as session
-from views import IndexHandler, BattleViewHandler
+from vendors.views import IndexHandler, BattleViewHandler
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class Application(tornado.web.Application):
 
             (r'/api/battles', BattleListHandler),
             (r'/api/battles/%s' % const.MATCH_NAME, BattleHandler),
-            (r'/api/posts/%s/([0|1])/%s' % (const.MATCH_NAME, const.MATCH_NAME), PostListHandler),
+            (r'/api/posts/%s/([0|1])' % const.MATCH_NAME, PostListHandler),
             (r'/api/post', PostMessageHandler),
             (r'/api/vote', PostVoteHandler),
         ]

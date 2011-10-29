@@ -32,7 +32,8 @@ window.BATTLE = Backbone.Model.extend({
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
 							bf_id: b.id,
-							posts: f.recent_posts,
+							recent: f.recent_posts,
+							hottest: f.hottest_posts,
 							fighter: fid
 					});
 				
@@ -283,6 +284,12 @@ window.CITYPK = Backbone.Router.extend({
 $(function(){
 	window.App = new CITYPK();
 	Backbone.history.start();
+});
+
+$('.log-tabs').click(function(){
+	$('#fighter'+$(this).attr('fighter')+'posts div').hide();
+	$('#fighter'+$(this).attr('fighter')+$(this).attr('rel')).show();
+	return false;
 });
 
 

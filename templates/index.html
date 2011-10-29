@@ -26,6 +26,7 @@
         text-align: center; /* center align it with the container */
       }
       .container {
+        margin-top: 100px;
         width: 960px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
       }
 
@@ -52,12 +53,19 @@
       /* Styles you shouldn't keep as they are for displaying this base example only */
       /* Give a quick and non-cross-browser friendly divider */
       .content .span4 {
-        margin-left: 0;
-        padding: 0px 10px;
+        margin-top: 100px;
+        padding: 0;
+        text-align: center;
       }
 
       ul{
         list-style: none;
+        text-align: center;
+      }
+
+      .vs{
+        font-size: 100px;
+        margin: 20px;
       }
 
     </style>
@@ -75,7 +83,11 @@
       <ul>
       {% for battle in battles%}
 
-          <li><a href="/battles/{{battle.id}}"><img src="{{battle.fighter1.photo}}" width="200" height="200"> VS. <img src="{{battle.fighter2.photo}}" width="200" height="200"></a></li>
+          <li><a href="/battles/{{battle.id}}">
+            <img src="{{battle.fighter1.photo}}" width="200" height="200">
+            <span class="vs">VS.</span>
+            <img src="{{battle.fighter2.photo}}" width="200" height="200"></a>
+          </li>
         
       {% end %}
       </ul>

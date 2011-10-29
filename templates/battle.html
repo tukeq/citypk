@@ -102,12 +102,11 @@
 	
 	<div class="span4">
 		<ul class="log-tabs">
-		  <li class="active"><a href="#" rel="hot0">Hot</a></li>
-		  <li><a href="#" rel="new0">New</a></li>
+		  <li class="active"><a href="#" fighter="0" rel="hot">Hot</a></li>
+		  <li><a href="#" fighter="0" rel="recent">New</a></li>
 		</ul>
         <div class='clear'></div>
-		<div class='combat-log' id='fighter0hot'></div>
-		<div class='combat-log hidden' id='fighter0posts'></div>
+		<div id='fighter0posts'></div>
 	</div>
 	
 	
@@ -130,12 +129,12 @@
 		
 		<!-- NEW POST FORM -->
 		<div class='post-new' id="submitPost" style="clear: both;">
-			<div id="energyBar" style="width: 200px;border: 1px solid #ccc;"><div class="energy" style="width:0;min-height:25px;background:red;"></div></div>
 			<form class="inactive">
 				<fieldset>
 					<textarea id="comment" disabled></textarea>
 					<input id="fighter0submit" type="submit" class="submit" value="" rel="" disabled />
 					<input id="fighter1submit" type="submit" class="submit" value="" rel="" disabled />
+					<div id="energyBar" style="width: 200px;border: 1px solid #ccc;"><div class="energy" style="width:0;min-height:25px;background:red;"></div></div>
 				</fieldset>
 			</form>
 		</div><!--  END = NEW POST FORM -->
@@ -145,12 +144,11 @@
 
 	<div class="span4">
 		<ul class="log-tabs">
-		  <li class="active"><a href="#" rel="hot1">Hot</a></li>
-		  <li><a href="#" rel="new1">New</a></li>
+		  <li class="active"><a href="#" fighter="1" rel="hot">Hot</a></li>
+		  <li><a href="#" fighter="1" rel="recent">New</a></li>
 		</ul>
         <div class='clear'></div>
-		<div class='combat-log' id='fighter1hot'></div>
-		<div class='combat-log hidden' id='fighter1posts'></div>
+		<div id='fighter1posts'></div>
 	</div>
 
 </div> <!-- /row -->
@@ -163,8 +161,19 @@
 
 <script type="text/template" id="posts-template">
 
-<ul class="unstyled">
-	<% _.each(posts,function(p) { %>
+<ul class="unstyled" id="fighter<%= fighter %>recent">
+	<% _.each(recent,function(p) { %>
+		<li><div><div>
+			<img class='thumbnail' src="<%= p.author_avatar %>" />
+			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
+		</div>
+		<%= p.comment %></div>
+		<img class='combat-img' src="<%= p.photo_url %>" /></li>
+	<% }); %>
+</ul>
+
+<ul class="unstyled" id="fighter<%= fighter %>hot">
+	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
 			<a href="#" rel="<%= p.post_id %>" class="upvote">up vote</a> (125)
