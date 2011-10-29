@@ -85,11 +85,15 @@ class PostVoteHandler(RequestHandler):
     weibo_id=self.session['me']
     user = User.objects.get(weibo_id=weibo_id)
     post = Post.objects.get(id=post_id)
-    post.vote_by(user)
-    pn('fight')
+    result = post.vote_by(user)
+    if result:
+      pn('fight')
+      post.battle.blood(post.fighter, 10)
+
+
     self.write(json.dumps({
       'post_id': post.id,
-      'status': 1,
+      'status': result,
       'message': ''
     }))
 

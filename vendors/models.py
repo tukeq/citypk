@@ -53,6 +53,11 @@ class Battle(Document):
   participants = IntField(default = lambda:0)
   created_at = DateTimeField(default=lambda:datetime.now())
 
+  def blood(self, fighter, amount):
+    f = self.fighter1 if fighter == 1 else self.fighter2
+    f.blood -= amount
+    self.save()
+
   @property
   def status(self):
     if datetime.now() < self.start:
@@ -146,6 +151,9 @@ class  Post(Document):
       self.voters.append(user)
       self.votes += 1
       self.save()
+      return True
+
+    return False
 
 
   def to_dict(self):
