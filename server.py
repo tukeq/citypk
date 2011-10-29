@@ -1,6 +1,4 @@
 from __future__ import unicode_literals, print_function, division
-import asyncore
-import json
 import logging
 import os
 
@@ -12,29 +10,18 @@ import tornado.options
 from tornado.options import define, options
 from mongoengine import connect
 from vendors import const
-from vendors.api import BattleHandler, BattleListHandler, PostListHandler, PostMessageHandler, PostVoteHandler
-from vendors.base_handler import BaseHandler
-from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler, AuthLoginViewHandler
+from vendors.api import BattleHandler, BattleListHandler, PostListHandler, PostMessageHandler, PostVoteHandler, RealtimeHandler
+from vendors.sina_auth import  AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler, AuthLoginViewHandler
 import vendors.tornado_session as session
 from vendors.views import IndexHandler, BattleViewHandler, BattleViewHandler2
 
-LISTENERS = []
+
 logger = logging.getLogger(__name__)
 
 define('port', default=8000, type=int)
 define('host', default='localhost', type=str)
 
-class RealtimeHandler(BaseHandler):
-    def open(self, *args, **kargs):
-        print('new connection')
-        LISTENERS.append(self)
 
-    def on_message(self, message):
-        print(message)
-
-    def on_close(self):
-#      pass
-        LISTENERS.remove(self)
 
 class Application(tornado.web.Application):
     def __init__(self):

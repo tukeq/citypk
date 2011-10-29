@@ -109,7 +109,8 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <img class='combat-img' src="{{ p['photo_url'] }}" /></li>
+          <!--<img class='combat-img' src="{{ p['photo_url'] }}" />-->
+          </li>
       {% end %}
       </ul>
       <ul class="unstyled combat-log hidden" id="fighter0recent">
@@ -120,7 +121,9 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <img class='combat-img' src="{{ p['photo_url'] }}" /></li>
+          <!--<img class='combat-img' src="{{ p['photo_url'] }}" />-->
+          
+          </li>
       {% end %}
       </ul>
 
@@ -177,7 +180,7 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <img class='combat-img' src="{{ p['photo_url'] }}" /></li>
+          </li>
        {% end %}
       </ul>
       <ul class="unstyled combat-log hidden" id="fighter1recent">
@@ -188,7 +191,7 @@
           </div>
           {{ p['comment'] }}</div>
           <div class='clear'></div>
-          <img class='combat-img' src="{{ p['photo_url'] }}" /></li>
+          </li>
       {% end %}
       </ul>
 
@@ -306,7 +309,7 @@ $(function() {
       };
 //      alert(data);
       $.postJSON('/api/post', data, function(res) {
-        alert('done');
+//        alert('done');
       });
     }
     $('#fighter0submit').click(function(){
@@ -318,8 +321,14 @@ $(function() {
       add_post($('#comment').val(), 1);
       return false;
     });
-
-
+  
+    var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
+    ws.onopen = function() {};
+    ws.onmessage = function (evt) {
+//      var received_msg = $.parseJSON(evt.data);
+        alert(evt.data);
+    };
+    ws.onclose = function() {};
 });
 </script>
 

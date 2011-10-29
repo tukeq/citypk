@@ -18,11 +18,22 @@ from util import get_first_url_from_string
 from vendors.models import *
 from vendors.sina_auth import login_required
 
+
 LISTENERS = []
 logger = logging.getLogger(__name__)
 
-class BattleListHandler(RequestHandler):
+class RealtimeHandler(tornado.websocket.WebSocketHandler):
+    def open(self, *args, **kargs):
+        print('new connection')
+        LISTENERS.append(self)
 
+    def on_message(self, message):
+        print(message)
+
+    def on_close(self):
+        LISTENERS.remove(self)
+
+class BattleListHandler(RequestHandler):
   def get(self):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     battles = [b.to_dict() for b in Battle.get_list()]
@@ -75,7 +86,7 @@ class PostMessageHandler(BaseHandler):
     post.save()
     post.battle.blood(fighter, 15)
     logger.info('post success')
-    pn('post a new message')
+    pn('Fight: post a new message')
 
     self.write(json.dumps({
       'post_id': str(post.id),
