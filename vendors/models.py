@@ -1,38 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, unicode_literals, print_function
-from datetime import datetime
+from datetime import datetime, timedelta
 from mongoengine.document import Document, EmbeddedDocument
 from mongoengine.fields import StringField, DateTimeField, IntField, EmbeddedDocumentField, ListField, ReferenceField
 from mongoengine.queryset import Q
 from const import BATTLE_ONGOING, BATTLE_FINISHED, BATTLE_NOT_STARTED
-
-"""
-USER = hash{
-    id
-    name
-    avatar
-}
-BATTLE = hash{
-  id
-  start
-  end
-  description
-  status
-  fighters = [{id0, photo, blood, desc, posts}, {id1, photo, blood, desc}]
-  winner
-  participants=[user_id,...]
-}
-
-POSTS
-{
-id
-battle_id
-content
-photo_url
-voters=[user_id,...]
-created_at
-}
-"""
+from mongoengine import connect
 
 class User(Document):
   name = StringField()
@@ -41,7 +14,7 @@ class User(Document):
 
 
 class Fighter(EmbeddedDocument):
-  name=StringField()
+  name = StringField()
   photo = StringField()
   blood = IntField(default=1000)
   desc = StringField()
@@ -62,21 +35,22 @@ class Fighter(EmbeddedDocument):
     }]
     """
     return {
-        'name':self.name,
-        'photo':self.photo,
-        'blood':self.blood,
-        'desc':self.desc,
+      'name': self.name,
+      'photo': self.photo,
+      'blood': self.blood,
+      'desc': self.desc,
       }
 
+
 class Battle(Document):
-  start=DateTimeField()
-  end=DateTimeField()
-  desc=StringField()
+  start = DateTimeField()
+  end = DateTimeField()
+  desc = StringField()
 
   fighter1 = EmbeddedDocumentField(Fighter)
   fighter2 = EmbeddedDocumentField(Fighter)
 
-  participants = IntField()
+  participants = IntField(default=lambda :0)
   created_at = DateTimeField(default=datetime.now)
 
   @property
@@ -93,6 +67,11 @@ class Battle(Document):
       return 1 if self.fighter1.blood > self.fighter2.blood else 2
     return 0
 
+  @property
+  def time_left(self):
+    if self.status == BATTLE_ONGOING:
+      return (datetime.now() - self.start).seconds
+    return 0
 
   def to_dict(self, detail=False):
     """
@@ -115,24 +94,24 @@ class Battle(Document):
 
     }]
   """
-    info= {
-      'bf_id':str(self.id),
-      'description':self.desc,
-      'participants':self.participants,
-      'status':self.status,
-      'winner':self.winner,
-      'time_left':self.time_left,
-      'fighter1':self.fighter1.to_dict(),
-      'fighter2':self.fighter2.to_dict(),
-    }
+    info = {
+      'bf_id': str(self.id),
+      'description': self.desc,
+      'participants': self.participants,
+      'status': self.status,
+      'winner': self.winner,
+      'time_left': self.time_left,
+      'fighter1': self.fighter1.to_dict(),
+      'fighter2': self.fighter2.to_dict(),
+      }
     if detail:
       info['fighter1'].update({
-        'recent_posts':Post.battle_posts(self,1,'recent'),
-        'hottest_posts':Post.battle_posts(self,1,'hottest')
+        'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'recent')],
+        'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 1, 'hottest')]
       })
       info['fighter2'].update({
-        'recent_posts':Post.battle_posts(self,2,'recent'),
-        'hottest_posts':Post.battle_posts(self,2,'hottest')
+        'recent_posts': [p.to_dict() for p in Post.battle_posts(self, 2, 'recent')],
+        'hottest_posts': [p.to_dict() for p in Post.battle_posts(self, 2, 'hottest')]
       })
 
     return info
@@ -140,6 +119,7 @@ class Battle(Document):
   @classmethod
   def get_list(cls):
     return cls.objects.order_by('-participants', '-created_at')
+
 
 class  Post(Document):
   battle = ReferenceField(Battle)
@@ -156,9 +136,9 @@ class  Post(Document):
 
   @classmethod
   def battle_posts(cls, battle, fighter, type):
-    if type=='recent':
-      return Post.objects(Q(battle=battle)&Q(fighter=fighter)).order_by('-created_on')[:5]
-    return Post.objects(Q(battle=battle)&Q(fighter=fighter)).order_by('-votes')[:5]
+    if type == 'recent':
+      return Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-created_on')[:5]
+    return Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-votes')[:5]
 
   def to_dict(self):
     """
@@ -173,14 +153,42 @@ class  Post(Document):
     }
     """
     return {
-      'post_id':str(self.id),
-      'author_id':str(self.author.id),
-      'author_name':self.author.name,
-      'author_avatar':self.author.avatar,
-      'comment':self.comment,
-      'photo_url':self.photo_url,
-      'votes':self.votes
+      'post_id': str(self.id),
+      'author_id': str(self.author.id),
+      'author_name': self.author.name,
+      'author_avatar': self.author.avatar,
+      'comment': self.comment,
+      'photo_url': self.photo_url,
+      'votes': self.votes
     }
+
+def _init_data():
+  connect('citypk')
+  battle = Battle(
+
+    start=datetime.now(),
+    end=datetime.now() + timedelta(hours=3),
+    desc='帝都与魔都的大战',
+    fighter1 = Fighter(
+      name='北京',
+      photo='http://www.williamlong.info/google/upload/497_2.jpg     ',
+      desc='帝都'
+    ),
+
+    fighter2 = Fighter(
+      name='上海',
+      photo='http://imgs.soufun.com/news/2010_05/13/office/1273713782423_000.jpg',
+      desc='魔都'
+    ),
+  )
+
+  battle.save()
+
+if __name__ == "__main__":
+#  _init_data()
+  connect('citypk')
+  battle=Battle.objects[0]
+  print(battle)
 
 
 
