@@ -7,6 +7,7 @@ from base_handler import BaseHandler
 import tornado.web
 from weibopy.api import API
 
+
 # weibo
 consumer_key = '3546266617'
 consumer_secret = 'ca0777ad67c0cc4aa19b130a6522fe01'
@@ -57,6 +58,9 @@ class AuthLoginCheckHandler(BaseHandler):
         current_user = auth_client.get_username()
         api = API(auth_client)
 
+        # save the user info to database
+
+
         self.session['me'] = api.me()
         self.session['username'] = current_user
 
@@ -99,6 +103,6 @@ def login_required(func):
         request = argkw.get('request') or argc[0]
         access_token = request.session.get('oauth_access_token')
         if access_token is None:
-            return request.render("login.html")
+            return request.redirect('/login')
         return func(*argc, **argkw)
     return new_func

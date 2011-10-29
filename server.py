@@ -15,7 +15,7 @@ import const
 from api import *
 from util import get_abs_url
 from vendors.base_handler import BaseHandler
-from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler
+from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
 from vendors.weibo_auth import _oauth
 import vendors.tornado_session as session
 
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 define('port', default=8000, type=int)
 define('host', default='localhost', type=str)
 
-class RealtimeHandler(tornado.websocket.WebSocketHandler):
+class RealtimeHandler(BaseHandler):
     def open(self, *args, **kargs):
         print('new connection')
         LISTENERS.append(self)
@@ -37,8 +37,8 @@ class RealtimeHandler(tornado.websocket.WebSocketHandler):
 #      pass
         LISTENERS.remove(self)
 
-class IndexHandler(tornado.web.RequestHandler):
-
+class IndexHandler(BaseHandler):
+    @login_required
     def get(self, *args, **kargs):
         self.render('index.html', host=options.host, port=options.port)
 
@@ -60,6 +60,7 @@ class Application(tornado.web.Application):
             (r'/', IndexHandler),
             (r'/login', AuthLoginHandler),
             (r'/login_check', AuthLoginCheckHandler),
+            (r'/logout', AuthLogoutHandler),
             (r'/messages', RealtimeHandler),
             (r'/api/battles', BattleListHandler),
             (r'/api/battle/%s' % const.MATCH_NAME, BattleHandler),
