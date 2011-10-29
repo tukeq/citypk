@@ -3,16 +3,47 @@
 1.1
 server will notify server status:
 {
-  'update': true/false: true means client need to poll data from server.
+  update: true/false: true means client need to poll data from server.
+  winner: -1/0/1,
+  broadcast: 'broadcast message, like BJ give SH a kick and SH lose 15 points',
 }
+
+1.2.0
+API: get battle field list
+URL: http://test.com/api/battles
+[
+  {
+    bf_id: 12345,
+    fighters: [
+      {
+        'name': 'SH',
+        'photo': 'http://test.com/sh.jpg'
+      },
+      {
+        'name': 'BJ',
+        'photo': 'http://test.com/bj.jpg'
+      }
+    ]
+    description: 'describe this battle field',
+    participants: 12300, // how many participants,
+    status: 0|1|2, // 0: not started, 1: ongoing, 2: finished
+    winner: 0/1, // which side wins
+  }
+]
+
 
 1.2
 API: collect all information.
-URL: http://test.com/api/refresh
+URL: http://test.com/api/battle/{bf_id}
 {
   bf_id: 12345, //which battle field this is for
-  timer: 10800, // how many seconds this battle will be over
+  description: 'describe this battle field',
+  participants: 12300,
+  winner: 0/1,
+  time_left: 10800, // how many seconds this battle will be over
   fighters: [{  // city 0
+    name: 'BJ',
+    description: 'BJ is bla bla bla...',
     blood: 10, // how many blood left
     recent_posts: {
       // see API 1.3
