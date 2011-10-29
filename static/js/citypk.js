@@ -223,7 +223,7 @@ window.SUBMIT = Backbone.View.extend({
 		window.recharge = setInterval(function(){
 			// ADD CHARGE
 			if (window.energy < 100) {
-				window.energy = window.energy+0.5; 
+				window.energy = window.energy+5; 
 				$('#energyBar .energy').css('width',window.energy+'%');
 				// CHECK FORM DISABLED
 				if (!$('form').hasClass('inactive')) {
