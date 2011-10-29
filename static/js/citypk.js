@@ -17,6 +17,8 @@ window.BATTLE = Backbone.Model.extend({
 				// LOAD BATTLE PLAYERS
 				_.each(b.get('fighters'),function(f){
 				
+					console.log(f.name);
+				
 					// SET FIGHTER ID
 					window.fid = (typeof window.fid == 'undefined') ? 0 : 1 ;
 					
