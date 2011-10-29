@@ -132,7 +132,7 @@ class  Post(Document):
   comment = StringField()
   photo_url = StringField()
 
-  created_at = DateTimeField(default=lambda:datetime.now)
+  created_at = DateTimeField(default=lambda:datetime.now())
 
   @classmethod
   def battle_posts(cls, battle, fighter, type):

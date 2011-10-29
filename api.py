@@ -78,8 +78,9 @@ class PostMessageHandler(BaseHandler):
     fighter = data.get('fighter')
     comment = data.get('comment')
     img = get_first_url_from_string(comment)
-    comment = comment.replace(img, '')
-    weibo_id = self.session['me'].id
+    if img:
+      comment = comment.replace(img, '')
+    weibo_id = str(self.session['me'].id)
     try:
       battle = Battle.objects.get(id=bf_id)
       user = User.objects.get(weibo_id=weibo_id)
@@ -89,6 +90,7 @@ class PostMessageHandler(BaseHandler):
         'status': 0,
         'message': u'提交失败'
       }))
+      return
     post = Post(
       battle = battle,
       author = user,
@@ -97,12 +99,13 @@ class PostMessageHandler(BaseHandler):
       photo_url = img
     )
     post.save()
-
+    pn('post a new message')
     self.write(json.dumps({
-      'post_id': post.id,
+      'post_id': str(post.id),
       'status': 1,
       'message': ''
     }))
+
 
 class PostVoteHandler(RequestHandler):
   @login_required
