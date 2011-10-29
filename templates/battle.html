@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>城市PK</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -27,24 +27,25 @@
       }
       .container {
         width: 960px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+        /*background-color: rgba(0,0,0,0);*/
       }
 
       /* The white background content wrapper */
       .content {
-        background-color: #fff;
+        /*background-color: #fff;*/
         padding: 20px;
         margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-        -webkit-border-radius: 0 0 6px 6px;
-           -moz-border-radius: 0 0 6px 6px;
-                border-radius: 0 0 6px 6px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+        /*-webkit-border-radius: 0 0 6px 6px;*/
+           /*-moz-border-radius: 0 0 6px 6px;*/
+                /*border-radius: 0 0 6px 6px;*/
+        /*-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);*/
+           /*-moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);*/
+                /*box-shadow: 0 1px 2px rgba(0,0,0,.15);*/
       }
 
       /* Page header tweaks */
       .page-header {
-        background-color: #f5f5f5;
+        /*background-color: #f5f5f5;*/
         padding: 20px 20px 10px;
         margin: -20px -20px 20px;
       }
@@ -60,6 +61,9 @@
         list-style: none;
       }
 
+      #javascript_countdown_time{
+        font-size: 26px;
+      }
     </style>
 
     <!-- Le fav and touch icons -->
@@ -82,16 +86,16 @@
     
     
 </head>
-<body>
+<body style="background: url(/static/img/background.png)">
 
 <!-- CONTAINER -->
 <div class="container"><div class="content">
-    
+    <div style="margin:auto;width:261px;"><img src="/static/img/logo.png"/></div>
     <div class="page-header">
 		<div class='span7 hp-left'>
 			<div class='hp-slider' id="fighter0blood"><div id='fighter0hp' class="blood"></div></div>
 		</div>
-		<div class='span2 countdown-timer'><div>2 : 49</div></div>
+		<div class='span2 countdown-timer'><div id="javascript_countdown_time"></div></div>
 		<div class='span7 hp-right'>
 			<div class='hp-slider' id="fighter1blood"><div id='fighter0hp' class="blood"></div></div>
 		</div>
@@ -198,6 +202,79 @@ $(function() {
 		alert(data);
 	}, 'json');
 	})
+  var javascript_countdown = function () {
+      var time_left = 10; //number of seconds for countdown
+      var output_element_id = 'javascript_countdown_time';
+      var keep_counting = 1;
+      var no_time_left_message = 'No time left for JavaScript countdown!';
+
+      function countdown() {
+        if (time_left < 2) {
+          keep_counting = 0;
+        }
+
+        time_left = time_left - 1;
+      }
+
+      function add_leading_zero(n) {
+        if (n.toString().length < 2) {
+          return '0' + n;
+        } else {
+          return n;
+        }
+      }
+
+      function format_output() {
+        var hours, minutes, seconds;
+        seconds = time_left % 60;
+        minutes = Math.floor(time_left / 60) % 60;
+        hours = Math.floor(time_left / 3600);
+
+        seconds = add_leading_zero(seconds);
+        minutes = add_leading_zero(minutes);
+        hours = add_leading_zero(hours);
+
+        return hours + ':' + minutes + ':' + seconds;
+      }
+
+      function show_time_left() {
+        document.getElementById(output_element_id).innerHTML = format_output();//time_left;
+      }
+
+      function no_time_left() {
+        document.getElementById(output_element_id).innerHTML = no_time_left_message;
+      }
+
+      return {
+        count: function () {
+          countdown();
+          show_time_left();
+        },
+        timer: function () {
+          javascript_countdown.count();
+
+          if (keep_counting) {
+            setTimeout(function(){javascript_countdown.timer()}, 1000);
+          } else {
+            no_time_left();
+          }
+        },
+        //Kristian Messer requested recalculation of time that is left
+        setTimeLeft: function (t) {
+          time_left = t;
+          if (keep_counting == 0) {
+            javascript_countdown.timer();
+          }
+        },
+        init: function (t, element_id) {
+          time_left = t;
+          output_element_id = element_id;
+          javascript_countdown.timer();
+        }
+      };
+    }();
+//    alert(typeof javascript_countdown);
+    javascript_countdown.init(3600, 'javascript_countdown_time');
 });
 </script>
 
