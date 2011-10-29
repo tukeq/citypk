@@ -302,9 +302,9 @@ $(function() {
     }();
 //    alert(typeof javascript_countdown);
 
-    javascript_countdown.init({{battle['time_left']}}, 'javascript_countdown_time');
+  javascript_countdown.init(parseInt("{{battle['time_left']}}"), 'javascript_countdown_time');
 
-    function add_post(comment, fighter){
+  function add_post(comment, fighter){
       var data = {
         bf_id: $('#bf_id').val(),
         fighter: fighter,
@@ -314,24 +314,30 @@ $(function() {
       $.postJSON('/api/post', data, function(res) {
 //        alert('done');
       });
-    }
-    $('#fighter0submit').click(function(){
-      add_post($('#comment').val(), 0);
-      return false;
-    });
+  }
 
-    $('#fighter1submit').click(function(){
-      add_post($('#comment').val(), 1);
-      return false;
-    });
-  
-    var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
-    ws.onopen = function() {};
-    ws.onmessage = function (evt) {
-//      var received_msg = $.parseJSON(evt.data);
-        alert(evt.data);
-    };
-    ws.onclose = function() {};
+  function update_data(){
+      location.reload();
+  }
+
+  $('#fighter0submit').click(function(){
+    add_post($('#comment').val(), 0);
+    return false;
+  });
+
+  $('#fighter1submit').click(function(){
+    add_post($('#comment').val(), 1);
+    return false;
+  });
+
+  var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
+  ws.onopen = function() {};
+  ws.onmessage = function (evt) {
+    var received_msg = $.parseJSON(evt.data);
+//    alert(evt.data);
+    update_data();
+  };
+  ws.onclose = function() {};
 });
 </script>
 
