@@ -172,7 +172,7 @@
 	<% _.each(recent,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a>(125)
+			<div class="upvote"></div> &nbsp; &nbsp; (125)
 		</div>
 		<%= p.comment %></div>
         <div class='clear'></div>
@@ -184,7 +184,7 @@
 	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<a href="#" rel="<%= p.post_id %>" class="upvote"><div></div></a> (125)
+			<div class="upvote"></div> &nbsp; &nbsp; (125)
 		</div>
 		<%= p.comment %></div>
         <div class='clear'></div>
