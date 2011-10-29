@@ -1,0 +1,66 @@
+// API to get information
+
+1.1
+server will notify server status:
+{
+  'update': true/false: true means client need to poll data from server.
+}
+
+1.2
+API: collect all information.
+URL: http://test.com/api/refresh
+{
+  bf_id: 12345, //which battle field this is for
+  timer: 10800, // how many seconds this battle will be over
+  fighters: [{  // city 0
+    blood: 10, // how many blood left
+    recent_posts: {
+      // see API 1.3
+    },
+    hottest_posts: {
+    }
+  }, {          // city 1
+
+  }]
+}
+
+1.3
+API: get posts for a fighter. 
+URL: http://test.com/api/posts/{battle_filed_id}/{fighter_id}/(recent|hottest)
+Return:
+{
+  bf_id: 12345, // which battle field this is for
+  fighter: 0/1,  // which fighter we want to know
+  posts: [
+    post_id: 123456, // id for the post,
+    author_id: 3445236, // weibo account id,
+    comment: "this is cool", // comment user posted.
+    photo_url: "",
+  ]
+}
+
+1.4
+API: send a post
+post to: http://test.com/api/post
+{
+  bf_id: 12345,
+  fighter: 0/1,
+  author_id: 3445236,
+  comment: "this is super cool. http://abcd.com/abcd.jpg"
+}
+return:
+{
+  'status': 1|0, // success/fail
+  'message': 'some failing message'
+}
+
+1.5
+API: post a vote
+post to: http://test.com/api/vote
+{
+  post_id: 123456
+}
+return:
+{
+  'status': 1|0, //success/fail
+  'message': 'some failing message'
