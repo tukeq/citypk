@@ -143,7 +143,7 @@
 					<input id="fighter0submit" type="submit" class="submit btn-bj" value="" rel="" disabled />
 					<input id="fighter1submit" type="submit" class="submit btn-sh" value="" rel="" disabled />
                     <div class='clear'></div>
-					<div id="energyBar" class='hidden' style="width: 200px;border: 1px solid #ccc;"><div class="energy" style="width:0;min-height:25px;background:red;"></div></div>
+					<div id="energyBar" style="width: 200px;border: 1px solid #ccc;"><div class="energy" style="width:0;min-height:25px;background:red;"></div></div>
 				</fieldset>
 			</form>
 		</div><!--  END = NEW POST FORM -->
@@ -178,7 +178,7 @@
 	<% _.each(recent,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<div class="upvote"></div> &nbsp; &nbsp; (<%= p.vote %>)
+			<a href="#" class="upvote" rel="<%= p.post_id %>"></a> &nbsp; &nbsp; (<%= p.vote %>)
 		</div>
 		<%= p.comment %></div>
         <div class='clear'></div>
@@ -190,7 +190,7 @@
 	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
-			<div class="upvote"></div> &nbsp; &nbsp; (<%= p.vote %>)
+			<a href="#" class="upvote" rel="<%= p.post_id %>"></a> &nbsp; &nbsp; (<%= p.vote %>)
 		</div>
 		<%= p.comment %></div>
         <div class='clear'></div>
