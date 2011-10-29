@@ -57,10 +57,11 @@ class PostMessageHandler(BaseHandler):
   @login_required
   def post(self):
     self.set_header('Content-Type', 'application/json;charset=utf-8')
-    data = json.loads(self.request.body)
-    bf_id = data.get('bf_id')
-    fighter = data.get('fighter')
-    comment = data.get('comment')
+    #data = json.loads(self.request.body)
+
+    bf_id = self.get_argument('bf_id')
+    fighter = int(self.get_argument('fighter'))
+    comment = self.get_argument('comment')
     img = get_first_url_from_string(comment)
     if img:
       comment = comment.replace(img, '')
@@ -98,9 +99,10 @@ class PostMessageHandler(BaseHandler):
 class PostVoteHandler(BaseHandler):
   @login_required
   def post(self):
-    data = json.loads(self.request.body)
-    post_id = data.get('post_id')
-    weibo_id=self.session['me']
+    #data = json.loads(self.request.body)
+    post_id = self.get_argument('post_id')
+    #post_id = data.get('post_id')
+    weibo_id=str(self.session['me'].id)
     user = User.objects.get(weibo_id=weibo_id)
     post = Post.objects.get(id=post_id)
     result = post.vote_by(user)
@@ -108,9 +110,9 @@ class PostVoteHandler(BaseHandler):
       pn('fight')
       post.battle.blood(post.fighter, 10)
 
-
+    self.set_header('Content-Type', 'application/json;charset=utf-8')
     self.write(json.dumps({
-      'post_id': post.id,
+      'post_id': str(post.id),
       'status': result,
       'message': ''
     }))
