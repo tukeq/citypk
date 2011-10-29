@@ -32,3 +32,14 @@ class WeiboLoginHandler(BaseHandler):
   def get(self):
     self.render("login.html")
 
+
+class BattleViewHandler(BaseHandler):
+    @login_required
+    def get(self, *args, **kargs):
+        self.render('battle.html', host=options.host, port=options.port)
+
+    def post(self, *args, **kwargs):
+        print('get message')
+#        print(self.request.)
+        for listener in LISTENERS:
+          listener.write_message('this is from server, websocket is okay')

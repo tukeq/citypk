@@ -17,7 +17,7 @@ from util import get_abs_url
 from vendors.base_handler import BaseHandler
 from vendors.sina_auth import login_required, AuthLoginCheckHandler, AuthLoginHandler, AuthLogoutHandler
 import vendors.tornado_session as session
-from views import IndexHandler
+from views import IndexHandler, BattleViewHandler
 
 LISTENERS = []
 logger = logging.getLogger(__name__)
@@ -46,6 +46,8 @@ class Application(tornado.web.Application):
             (r'/login_check', AuthLoginCheckHandler),
             (r'/logout', AuthLogoutHandler),
             (r'/messages', RealtimeHandler),
+            (r'/battles/%s' % const.MATCH_NAME, BattleViewHandler),
+
             (r'/api/battles', BattleListHandler),
             (r'/api/battle/%s' % const.MATCH_NAME, BattleHandler),
             (r'/api/posts/%s/([0|1])/%s' % (const.MATCH_NAME, const.MATCH_NAME), PostListHandler),
