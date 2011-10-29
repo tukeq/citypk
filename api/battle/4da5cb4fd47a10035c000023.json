@@ -1,0 +1,62 @@
+{
+  'bf_id': '4da5cb4fd47a10035c000023',
+  'description': '北京上海大战，一触即发，谁是你心目中的终极城市？',
+  'participants': 385,
+  'winner': -1,
+  'time_left': 3600,
+  'fighters': [{
+    'name': '北京',
+    'current_photo': 'http://image.ctsho.com/content/2008/05/05085943200.jpg',
+    'description': '北京是首都，谁人能比？',
+    'blood': 980,
+    'recent_posts': [{
+      'post_id': '4da5cb4fd47a10035c000133',
+      'author_id': 1737931304,
+      'comment': '北京有天安门，上海有啥？',
+      'photo_url': 'http://image.ctsho.com/content/2008/05/05085943200.jpg',
+    }, {
+      'post_id': '4da5cb4fd47a10035c000133',
+      'author_id': 1737931304,
+      'comment': '北京有CBD，上海有啥？',
+      'photo_url': 'http://image.ctsho.com/content/2008/05/05085943200.jpg',
+    }],
+    'hottest_posts': [{
+      'post_id': '4da5cb4fd47a10035c000133',
+      'author_id': 1737931304,
+      'comment': '北京有胡同，上海有啥？',
+      'photo_url': 'http://image.ctsho.com/content/2008/05/05085943200.jpg',
+    }, {
+      'post_id': '4da5cb4fd47a10035c000133',
+      'author_id': 1737931304,
+      'comment': '北京有炸酱面，上海有啥？',
+      'photo_url': 'http://image.ctsho.com/content/2008/05/05085943200.jpg',
+    }]
+  }, {
+    'name': '上海',
+    'current_photo': 'http://www.expo-china.com/pages/hall/200309/490/Images/490_20100614211522534614.jpg',
+    'description': '上海不差钱',
+    'blood': 800,
+    'recent_posts': [{
+      'post_id': '4da5cb4fd47a10035c000134',
+      'author_id': 1707084182,
+      'comment': '上海没有天安门，但是我们有世博会！',
+      'photo_url': 'http://www.expo-china.com/pages/hall/200309/490/Images/490_20100614211522534614.jpg'
+    },{
+      'post_id': '4da5cb4fd47a10035c000134',
+      'author_id': 1707084182,
+      'comment': '上海没有天安门，但是我们有世博会！',
+      'photo_url': 'http://www.expo-china.com/pages/hall/200309/490/Images/490_20100614211522534614.jpg'
+    }],
+    'hottest_posts': [{
+      'post_id': '4da5cb4fd47a10035c000134',
+      'author_id': 1707084182,
+      'comment': '上海没有天安门，但是我们有世博会！',
+      'photo_url': 'http://www.expo-china.com/pages/hall/200309/490/Images/490_20100614211522534614.jpg'
+    },{
+      'post_id': '4da5cb4fd47a10035c000134',
+      'author_id': 1707084182,
+      'comment': '上海没有天安门，但是我们有世博会！',
+      'photo_url': 'http://www.expo-china.com/pages/hall/200309/490/Images/490_20100614211522534614.jpg'
+    }]
+  }]
+}
