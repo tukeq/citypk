@@ -33,8 +33,8 @@ window.BATTLE = Backbone.Model.extend({
 					
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
-							recent: f.recent_posts,
-							hottest: f.hottest_posts,
+							recent_posts: f.recent_posts,
+							hottest_posts: f.hottest_posts,
 							fighter: fid
 					});
 				
@@ -66,7 +66,6 @@ window.BATTLE = Backbone.Model.extend({
 					}
 					window.fighter[fid].fetch({
 						success: function(p){
-							//console.log(window.fighter[fid].toJSON());
 							window.posts[fid].render();
 						}
 					});
@@ -119,8 +118,8 @@ window.POSTS = Backbone.View.extend({
 		this.render();
 	},
 	render: function(){
-		var pv = this;
-		$(this.el).html(_.template($('#posts-template').html(),pv.model.toJSON()));
+		var data = this.model.toJSON();
+		$(this.el).html(_.template($('#posts-template').html(),data));
 		if (!$('#fighter'+this.options.fighter+' #'+this.id).length) {
 			//$(this.el).html(_.template($('#posts-template').html(),this.options));
 			$('#fighter'+this.options.fighter+'posts').append(this.el);
