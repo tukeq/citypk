@@ -203,7 +203,7 @@ window.SUBMIT = Backbone.View.extend({
 						$('.successMsg').html('your post was successful').slideDown(500,function(){
 							$('.successMsg').delay(2000).slideUp();
 						});
-						
+						$('#comment').val('');
 					} else {
 						alert('holy shit!');
 					}
