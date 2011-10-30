@@ -98,12 +98,12 @@
 
 	<div class="span4">
 		<ul class="log-tabs">
-		  <li class="active"><a href="#" fighter="0" rel="hot">热门</a></li>
-		  <li><a href="#" fighter="0" rel="recent">最新</a></li>
+      <li class="active"><a href="#" fighter="0" rel="recent">最新</a></li>
+		  <li><a href="#" fighter="0" rel="hot">热门</a></li>
 		</ul>
         <div class='clear'></div>
 		<div>
-      <ul class="unstyled combat-log" id="fighter0hottest">
+      <ul class="unstyled combat-log hidden" id="fighter0hottest">
       {% for p in battle['fighter0']['hottest_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
@@ -117,7 +117,7 @@
           </li>
       {% end %}
       </ul>
-      <ul class="unstyled combat-log hidden" id="fighter0recent">
+      <ul class="unstyled combat-log" id="fighter0recent">
       {% for p in battle['fighter0']['recent_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
@@ -172,12 +172,12 @@
 
 	<div class="span4">
 		<ul class="log-tabs">
-		  <li class="active"><a href="#" fighter="1" rel="hot">热门</a></li>
-		  <li><a href="#" fighter="1" rel="recent">最新</a></li>
+		  <li ><a href="#" fighter="1" rel="hot">热门</a></li>
+		  <li class="active"><a href="#" fighter="1" rel="recent">最新</a></li>
 		</ul>
         <div class='clear'></div>
 		<div>
-      <ul class="unstyled combat-log" id="fighter1hottest">
+      <ul class="unstyled combat-log hidden" id="fighter1hottest">
       {% for p in battle['fighter1']['hottest_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
@@ -191,7 +191,7 @@
           </li>
        {% end %}
       </ul>
-      <ul class="unstyled combat-log hidden" id="fighter1recent">
+      <ul class="unstyled combat-log " id="fighter1recent">
       {% for p in battle['fighter1']['recent_posts'] %}
           <li><div><div>
             <img class='thumbnail' src="{{ p['author_avatar'] }}" />
