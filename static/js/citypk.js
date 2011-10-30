@@ -48,8 +48,8 @@ window.BATTLE = Backbone.Model.extend({
 		});		
 	},
 	update: function(){
-		var b = this,
-			fid = 0;
+		var b = this;
+		window.fid = 0;
 		this.fetch({
 			success: function(r){
 				// LOAD BATTLE PLAYERS
@@ -61,6 +61,7 @@ window.BATTLE = Backbone.Model.extend({
     						opacity: 0.25
     					}, 100, function() {
     						hp.animate({ opacity: 1 }, 300);
+    						window.fid = 1;
     					});
 						$('#fighter'+fid+'blood .blood').css('width',(100-(f.blood/10))+'%');
 					}
