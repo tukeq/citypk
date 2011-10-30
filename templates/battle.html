@@ -178,7 +178,7 @@
 
 <script type="text/template" id="posts-template">
 
-<ul class="unstyled combat-log hidden" id="fighter<%= fighter %>recent">
+<ul class="unstyled combat-log hidden" style="overflow-y:scroll;overflow-x:hidden; height: 500px;" id="fighter<%= fighter %>recent">
 	<% _.each(recent,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
@@ -190,7 +190,7 @@
 	<% }); %>
 </ul>
 
-<ul class="unstyled combat-log" id="fighter<%= fighter %>hot">
+<ul class="unstyled combat-log" style="overflow-y:scroll;overflow-x:hidden; height: 500px;" id="fighter<%= fighter %>hot">
 	<% _.each(hottest,function(p) { %>
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
