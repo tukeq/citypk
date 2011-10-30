@@ -100,7 +100,7 @@
     <div style="margin:auto;width:261px;"><img src="/static/img/logo.png"/></div>
     <div class="page-header">
 		<div class='span7 hp-left' id="hp0">
-			<div class='hp-slider' id="fighter0blood"><div id='fighter0hp' class="blood"></div></div>
+			<div class='hp-slider' id="fighter0blood"><div id='fighter0hp' class="blood" style="float: right;"></div></div>
 		</div>
 		<div class='span2 countdown-timer'><div id="javascript_countdown_time"></div></div>
 		<div class='span7 hp-right' id="hp1">
@@ -289,7 +289,18 @@ $(function() {
       };
     }();
 //    alert(typeof javascript_countdown);
-    javascript_countdown.init(3600, 'javascript_countdown_time');
+    javascript_countdown.init(parseInt("{{battle['time_left']}}"), 'javascript_countdown_time');
+   var ws = new WebSocket("ws://{{host}}:{{port}}/messages");
+  ws.onopen = function() {};
+  ws.onmessage = function (evt) {
+    var received_msg = $.parseJSON(evt.data);
+//    alert(evt.data);
+    update_data();
+  };
+  ws.onclose = function() {};
+  function update_data(){
+      battle.update();
+  }
 });
 </script>
 

@@ -111,7 +111,8 @@ class PostVoteHandler(BaseHandler):
     result = post.vote_by(user)
     if result:
       pn('fight')
-      post.battle.blood(post.fighter, 10)
+      f = 1 if post.fighter == 0 else 0
+      post.battle.blood(f, 10)
 
     self.set_header('Content-Type', 'application/json;charset=utf-8')
     self.write(json.dumps({

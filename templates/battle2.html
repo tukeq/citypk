@@ -325,9 +325,7 @@ $(function() {
       });
   }
 
-  function update_data(){
-      location.reload();
-  }
+
 
   $('#fighter0submit').click(function(){
 
@@ -348,6 +346,10 @@ $(function() {
     update_data();
   };
   ws.onclose = function() {};
+
+  function update_data(){
+      location.reload();
+  }
 });
 </script>
 
