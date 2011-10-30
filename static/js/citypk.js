@@ -48,17 +48,19 @@ window.BATTLE = Backbone.Model.extend({
 		});		
 	},
 	update: function(){
-		var b = this;
+		var b = this,
+			fid = 0;
 		this.fetch({
 			success: function(r){
 				// LOAD BATTLE PLAYERS
 				_.each(b.get('fighters'),function(f){
 					$('#fighter'+fid+'pic').attr('src',f.current_photo);
 					if ((100-(f.blood/10)) != $('#fighter'+fid+'blood .blood').css('width')) {
-						$('#hp'+fid).animate({
+						var hp = $('#hp'+fid);
+						hp.animate({
     						opacity: 0.25
     					}, 100, function() {
-    						$('#hp'+fid).animate({ opacity: 1 }, 300);
+    						hp.animate({ opacity: 1 }, 300);
     					});
 						$('#fighter'+fid+'blood .blood').css('width',(100-(f.blood/10))+'%');
 					}
