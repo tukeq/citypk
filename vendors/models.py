@@ -155,9 +155,9 @@ class  Post(Document):
   @classmethod
   def battle_posts(cls, battle, fighter, type):
     if type == 'recent':
-      return [p for p in Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-created_on')[:5]]
+      return [p for p in Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-created_at')[:5]]
 
-    return [p for p in Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-created_on')[:5]]
+    return [p for p in Post.objects(Q(battle=battle) & Q(fighter=fighter)).order_by('-votes')[:5]]
 
   def vote_by(self, user):
     if user not in self.voters:
