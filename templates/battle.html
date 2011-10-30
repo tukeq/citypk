@@ -178,13 +178,8 @@
 
 <script type="text/template" id="posts-template">
 
-<<<<<<< HEAD
 <ul class="unstyled combat-log hidden" style="overflow-y:scroll; overflow-x: hidden; height:500px;" id="fighter<%= fighter %>recent">
-	<% _.each(recent,function(p) { %>
-=======
-<ul class="unstyled combat-log hidden" id="fighter<%= fighter %>recent">
 	<% _.each(recent_posts,function(p) { %>
->>>>>>> fix updating the data in client side.
 		<li><div><div>
 			<img class='thumbnail' src="<%= p.author_avatar %>" />
 			<a href="#" class="upvote" rel="<%= p.post_id %>"></a> &nbsp; &nbsp; (<%= p.votes %>)
