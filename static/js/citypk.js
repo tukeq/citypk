@@ -149,7 +149,7 @@ window.POSTS = Backbone.View.extend({
 					}
 				},
 				error: function(){
-					alert('wtf!');
+//					alert('wtf!');
 				},
 				dataType: 'json'
 			});
@@ -209,7 +209,7 @@ window.SUBMIT = Backbone.View.extend({
 					}
 				},
 				error: function(){
-					alert('wtf!');
+//					alert('wtf!');
 				},
 				dataType: 'json'
 			});
