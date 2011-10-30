@@ -141,7 +141,7 @@ window.POSTS = Backbone.View.extend({
 						// UPDATE UI
 						
 						submit.charge(50);
-						$('.successMsg').html('your upvote was successful').slideDown(1000,function(){
+						$('.successMsg').html('your upvote was successful').slideDown(500,function(){
 							$('.successMsg').delay(2000).slideUp();
 						});
 					} else {
@@ -200,7 +200,7 @@ window.SUBMIT = Backbone.View.extend({
 					if (r.status){	
 						// RESET CHARGE
 						sf.charge(100);
-						$('.successMsg').html('your post was successful').slideDown(1000,function(){
+						$('.successMsg').html('your post was successful').slideDown(500,function(){
 							$('.successMsg').delay(2000).slideUp();
 						});
 						
