@@ -29,7 +29,7 @@ window.BATTLE = Backbone.Model.extend({
 					$('#fighter'+fid+'submit').attr('value','support '+f.name); // IMAGE
 					
 					// PROGRESS BARS
-					$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
+					$('#fighter'+fid+'blood .blood').css('width',(100-(f.blood/10))+'%');
 					
 					// CREATE FIGHTER POSTS MODEL
 					window.fighter[fid] = new FIGHTER({
@@ -54,13 +54,13 @@ window.BATTLE = Backbone.Model.extend({
 				// LOAD BATTLE PLAYERS
 				_.each(b.get('fighters'),function(f){
 					$('#fighter'+fid+'pic').attr('src',f.current_photo);
-					if (f.blood/10 != $('#fighter'+fid+'blood .blood').css('width')) {
+					if ((100-(f.blood/10)) != $('#fighter'+fid+'blood .blood').css('width')) {
 						$('#hp'+fid).animate({
     						opacity: 0.25
     					}, 100, function() {
     						$('#hp'+fid).animate({ opacity: 1 }, 300);
     					});
-						$('#fighter'+fid+'blood .blood').css('width',(f.blood/10)+'%');
+						$('#fighter'+fid+'blood .blood').css('width',(100-(f.blood/10))+'%');
 					}
 					window.fighter[fid].fetch({
 						success: function(p){
